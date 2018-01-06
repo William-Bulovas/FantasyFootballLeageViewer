@@ -1,0 +1,21 @@
+{
+  "name": "fantasyfootball",
+  "version": "1.0.0",
+  "description": "Fantasy Viewer for the League Throw up the X",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "William Bulovas",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.2",
+    "passport": "^0.4.0",
+    "passport-oauth2": "^1.4.0",
+    "request": "^2.83.0",
+    "yahoo-fantasy": "^2.0.4"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
