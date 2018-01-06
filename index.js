@@ -4,9 +4,12 @@ const passport = require('passport');
 var request = require('request');
 var OAuth2Strategy = require('passport-oauth2');
 var YahooFantasy = require('yahoo-fantasy'); 
+var logger = require('morgan');
 
 var APP_KEY = "";
 var APP_SECRET =  "";
+
+var yj = new YahooFantasy(APP_KEY, APP_SECRET);
 
 passport.serializeUser(function(user, done) {
     done(null, user);
@@ -26,25 +29,26 @@ new OAuth2Strategy({
 }, function(accessToken, refreshToken, params, profile, done) {
     
     var options = {
-    url: 'https://social.yahooapis.com/v1/user/' + params.xoauth_yahoo_guid + '/profile?format=json',
-    method: 'get',
-    json: true,
-    auth: {
-        'bearer': accessToken
-    }
+        url: 'https://social.yahooapis.com/v1/user/' + params.xoauth_yahoo_guid + '/profile?format=json',
+        method: 'get',
+        json: true,
+        auth: {
+            'bearer': accessToken
+        }
     };
 
     request(options, function (error, response, body) {
     if (!error && response.statusCode == 200) {
         var userObj = {
-        id: body.profile.guiid,
-        name: body.profile.nickname,
-        avatar: body.profile.image.imageUrl,
-        accessToken: accessToken,
-        refreshToken: refreshToken
+            id: body.profile.guiid,
+            name: body.profile.nickname,
+            avatar: body.profile.image.imageUrl,
+            accessToken: accessToken,
+            refreshToken: refreshToken
         };
 
-        app.yf.setUserToken(accessToken);
+        yj.setUserToken(accessToken);
+        
 
         return done(null, userObj);
     }
@@ -53,31 +57,65 @@ new OAuth2Strategy({
 ));
 
 var app = express();
-app.yj = new YahooFantasy(APP_KEY, APP_SECRET);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'client/build')));
-  
+app.use(logger('dev'));
+
+app.get('/login',
+    passport.authenticate('oauth2', { failureRedirect: '/login' }),
+    function(req, res) {
+        res.send("login");
+    }
+);
+
+app.get('/auth/yahoo/callback',
+    passport.authenticate('oauth2', { failureRedirect: '/login' }),
+    function(req, res) {
+        res.redirect(req.session.redirect || '/');
+    } 
+);
+
+
 // Last three league keys
 // 348.l.1210268
 // 359.l.606258
 // 371.l.902083
+
+// Constants for the league keys
+const CURRENTKEY = "371.l.902083";
+const ALLKEY = "348.l.1210268, 359.l.606258, 371.l.902083";
   
+// Api to get all of the standings in the league so far
 app.get('/api/league/standings',
-  passport.authenticate('oauth2', { failureRedirect: '/login' }),
   function(req, res) {
-    app.yf.leagues.fetch(
-        "348.l.1210268, 359.l.606258, 371.l.902083",
-        "standings", // optional 
+    yj.leagues.fetch(
+        ALLKEY,
         function(err, data) {
           if (err)
-            res.redirect("/error");
+            res.send("error");
        
-          res.send(data);
+          res.json(data);
         }
       );
+    }
+);
+
+// Api query for only the current standings
+app.get('/api/league/standings/current',
+function(req, res) {
+  yj.leagues.fetch(
+      CURRENTKEY,
+      function(err, data) {
+        if (err)
+          res.send("error");
+     
+        res.json(data);
+      }
+    );
   }
 );
+
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
