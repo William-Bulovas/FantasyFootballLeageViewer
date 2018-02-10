@@ -129,8 +129,41 @@ app.get('/api/league/career',
         
                 var careerTotals = {};
 
-                
-                res.json(JSON.stringify(careerTotals));
+                data.forEach((year) => {
+                    year["standings"].forEach((row) => {
+                        var manager = row["managers"][0]["guid"];
+                        if (careerTotals.hasOwnProperty(manager)) {
+                            careerTotals[manager]["years_played"] += 1;
+                            careerTotals[manager]["results"].push({
+                                "result" : row["standings"]["rank"],
+                                "year" : year["league_key"]
+                            });
+                            careerTotals[manager]["movesMade"] = parseInt(careerTotals[manager]["movesMade"]) + parseInt(row["number_of_moves"]);
+                            careerTotals[manager]["tradesMade"] += parseInt(row["number_of_trades"]);
+                            careerTotals[manager]["pointsFor"] += parseInt(row["standings"]["points_for"]);
+                            careerTotals[manager]["pointsAgainst"] += parseInt(row["standings"]["points_against"]);
+                            careerTotals[manager]["wins"] += parseInt(row["standings"]["outcome_totals"]["wins"]);
+                            careerTotals[manager]["losses"] += parseInt(row["standings"]["outcome_totals"]["losses"]);        
+
+                        } else {
+                            careerTotals[manager] = {};
+                            careerTotals[manager]["manager"] = row["managers"];
+                            careerTotals[manager]["years_played"] = 1;
+                            careerTotals[manager]["results"] = [];
+                            careerTotals[manager]["results"].push({
+                                "result" : row["standings"]["rank"],
+                                "year" : year["league_key"]
+                            });
+                            careerTotals[manager]["movesMade"] = parseInt(row["number_of_moves"]);
+                            careerTotals[manager]["tradesMade"] = parseInt(row["number_of_trades"]);
+                            careerTotals[manager]["pointsFor"] = parseInt(row["standings"]["points_for"]);
+                            careerTotals[manager]["pointsAgainst"] = parseInt(row["standings"]["points_against"]);
+                            careerTotals[manager]["wins"] = parseInt(row["standings"]["outcome_totals"]["wins"]);
+                            careerTotals[manager]["losses"] = parseInt(row["standings"]["outcome_totals"]["losses"]);        
+                        }
+                    });
+                });
+                res.json(careerTotals);
             }
         );
     }
