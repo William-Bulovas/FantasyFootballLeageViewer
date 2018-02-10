@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import { Table, DropdownButton, MenuItem } from 'react-bootstrap';
 import './App.css';
 
@@ -13,8 +12,7 @@ class StandingsRow extends Component {
 				<td>{row["standings"]["outcome_totals"]["losses"]}</td>
 				<td>{row["standings"]["points_for"]}</td>
 				<td>{row["standings"]["points_against"]}</td>
-
-				</tr>
+			</tr>
 		);
 	}
 }
@@ -59,9 +57,9 @@ class Standings extends Component {
 										<th>Points For</th>
 										<th>Points Against</th>
 									</tr>
-								</thead>
-								<tbody>{rows}</tbody>
-							</Table>
+							</thead>
+							<tbody>{rows}</tbody>
+						</Table>
 					</div>
 				) : (
 					// If we cannot get the standings show a failure
@@ -146,6 +144,7 @@ class CareerTotals extends Component {
 
 	render() {    
 		const { standingsList } = this.state;
+		const { typeOfStats } = this.state;
 		var listOfPlayers = Object.values(standingsList);
 
 		listOfPlayers.sort(function(a,b) {
@@ -159,24 +158,29 @@ class CareerTotals extends Component {
 		const rows = [];
 		if (Object.values(standingsList).length) {
 			listOfPlayers.forEach((row) => {
-				rows.push(<CareerRow row={row} key={row["manager"]["guid"]} type={this.state.typeOfStats}/>);
+				rows.push(<CareerRow row={row} key={row["manager"]["guid"]} type={typeOfStats}/>);
 			});
 		}
 
 		return (
 
 			<div className="Standing">
-				{Object.values(standingsList).length ? (
+				{rows.length ? (
 					<div>
 						<h1>Career Standings</h1>
 						<DropdownButton
-							title="DropDown"
+							bsStyle={'Default'}
+							title={typeOfStats == "0" ? "Aggregate" : "Average"}
+							id={'dropdown-basic-Default'}
+							onSelect={(key, e) => {
+								this.setState({
+									typeOfStats : key
+								})
+							}}
 						>
-							<MenuItem eventKey="1" onSelect={
-								this.setState((typeOfStats, props) => 0)}
+							<MenuItem eventKey="0" key="0" 
 								>Aggregate</MenuItem>
-							<MenuItem eventKey="2" onSelect={
-								this.setState((typeOfStats, props) => 1)}
+							<MenuItem eventKey="1" key="1" 
 								>Average</MenuItem>
 
 						</DropdownButton>

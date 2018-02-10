@@ -93,8 +93,10 @@ app.get('/api/league/standings',
             ALLKEY,
             "standings",
             function(err, data) {
-            if (err)
+            if (err){
                 res.send("error");
+                return;
+            }
         
             res.json(data);
             }
@@ -108,8 +110,10 @@ app.get('/api/league/standings/current',
         yj.league.standings(
             CURRENTKEY,
             function(err, data) {
-                if (err)
-                res.send("error");
+                if (err){
+                    res.send("error");
+                    return;
+                }
             
                 res.json(data);
             }
@@ -124,9 +128,10 @@ app.get('/api/league/career',
             ALLKEY,
             "standings",
             function(err, data) {
-                if (err)
+                if (err){
                     res.send("error");
-        
+                    return;
+                }
                 var careerTotals = {};
 
                 data.forEach((year) => {
