@@ -6,8 +6,8 @@ var OAuth2Strategy = require('passport-oauth2');
 var YahooFantasy = require('yahoo-fantasy'); 
 var logger = require('morgan');
 
-var APP_KEY = "";
-var APP_SECRET =  "";
+var APP_KEY = process.env.YAHOO_APP_KEY;
+var APP_SECRET =  process.env.YAHOO_SECRET_KEY;
 
 var yj = new YahooFantasy(APP_KEY, APP_SECRET);
 
