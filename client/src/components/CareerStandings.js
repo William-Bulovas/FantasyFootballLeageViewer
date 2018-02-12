@@ -109,7 +109,7 @@ export default class CareerTotals extends Component {
 								>Average</MenuItem>
 
 						</DropdownButton>
-						<Table striped bordered condensed hover>
+						<Table striped bordered condensed hover responsive>
 							<thead>
 							<tr>
 									<th>Team</th>

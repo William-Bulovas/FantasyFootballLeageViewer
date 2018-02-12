@@ -48,7 +48,7 @@ export default class Standings extends Component {
 				{rows.length ? (
 					<div>
 						<h1>Current Standings</h1>
-						<Table striped bordered condensed hover>
+						<Table striped bordered condensed hover responsive>
 							<thead>
 								<tr>
 										<th>Team</th>
