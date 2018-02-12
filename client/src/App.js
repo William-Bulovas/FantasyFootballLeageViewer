@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Navbar, NavItem, Nav } from 'react-bootstrap';
 
 import Home from './pages/Home';
+import History from './pages/History';
 
 import './App.css';
 
@@ -37,7 +38,7 @@ class App extends Component {
 				{ page == 0 ? 
 					<Home/>
 				: page == 1 ?
-					<Home/>
+					<History/>
 				: <Home/>
 				}
 			</div>
