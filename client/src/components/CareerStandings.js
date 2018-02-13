@@ -60,7 +60,7 @@ export default class CareerTotals extends Component {
 	}
 
 
-	getStandings = () => {
+	getStandings = () => {		
 		fetch('api/league/career')
 			.then(res => res.json())
 			.then(standingsList => this.setState({standingsList}));

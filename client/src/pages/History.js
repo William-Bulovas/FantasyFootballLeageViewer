@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { PageHeader } from 'react-bootstrap';
 
-import Standings from '../components/Standings';
+import AllStandings from '../components/AllStandings';
 
 export default class History extends Component {
     render() {
@@ -11,7 +11,7 @@ export default class History extends Component {
                 <PageHeader>
                     History
                 </PageHeader>
-                <Standings/>
+                <AllStandings/>
             </div>
         )
     }

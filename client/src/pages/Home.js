@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { PageHeader } from 'react-bootstrap';
 
-import Standings from '../components/Standings';
+import CurrentStandings from '../components/CurrentStandings';
 import CareerTotals from '../components/CareerStandings';
 
 
@@ -13,7 +13,7 @@ export default class Home extends Component {
                 <PageHeader>
                     Home
                 </PageHeader>
-                <Standings/>
+                <CurrentStandings/>
                 <CareerTotals/>
             </div>
         )

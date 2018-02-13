@@ -17,23 +17,10 @@ class StandingsRow extends Component {
 	}
 }
 
-export default class Standings extends Component {
-	state = { standingsList: [] }
-
-	componentDidMount() {
-		this.getStandings();
-	}
-
-
-	getStandings = () => {
-		fetch('api/league/standings/current')
-			.then(res => res.json())
-			.then(standingsList => this.setState({standingsList}));
-	}
-
+export default class CurrentStandings extends Component {    
 
 	render() {    
-		const { standingsList } = this.state;
+		const standingsList = this.props.standings;
 
 		const rows = [];
 		if (Object.values(standingsList).length) {
@@ -45,33 +32,20 @@ export default class Standings extends Component {
 		return (
 
 			<div className="Standing">
-				{rows.length ? (
-					<div>
-						<h1>Current Standings</h1>
-						<Table striped bordered condensed hover responsive>
-							<thead>
-								<tr>
-										<th>Team</th>
-										<th>Wins</th>
-										<th>Losses</th>
-										<th>Points For</th>
-										<th>Points Against</th>
-									</tr>
-							</thead>
-							<tbody>{rows}</tbody>
-						</Table>
-					</div>
-				) : (
-					// If we cannot get the standings show a failure
-					<div>
-					<h1>No standings :(</h1>
-					<button
-						className="tryagain"
-						onClick={this.getStandings}>
-						Try Again?
-					</button>
-				</div>
-				)}
+                <div>
+                    <Table striped bordered condensed hover responsive>
+                        <thead>
+                            <tr>
+                                    <th>Team</th>
+                                    <th>Wins</th>
+                                    <th>Losses</th>
+                                    <th>Points For</th>
+                                    <th>Points Against</th>
+                                </tr>
+                        </thead>
+                        <tbody>{rows}</tbody>
+                    </Table>
+                </div>
 			</div>
 		);
 	}
