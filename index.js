@@ -9,7 +9,7 @@ var logger = require('morgan');
 var APP_KEY = process.env.YAHOO_APP_KEY;
 var APP_SECRET =  process.env.YAHOO_SECRET_KEY;
 
-var yj = new YahooFantasy(APP_KEY, APP_SECRET);
+var yf = new YahooFantasy(APP_KEY, APP_SECRET);
 
 passport.serializeUser(function(user, done) {
     done(null, user);
@@ -47,7 +47,7 @@ new OAuth2Strategy({
             refreshToken: refreshToken
         };
 
-        yj.setUserToken(accessToken);
+        yf.setUserToken(accessToken);
         
 
         return done(null, userObj);
@@ -89,7 +89,7 @@ const ALLKEY = "348.l.1210268, 359.l.606258, 371.l.902083";
 // Api to get all of the standings in the league so far
 app.get('/api/league/standings',
     function(req, res) {
-        yj.leagues.fetch(
+        yf.leagues.fetch(
             ALLKEY,
             "standings",
             function(err, data) {
@@ -107,7 +107,7 @@ app.get('/api/league/standings',
 // Api query for only the current standings
 app.get('/api/league/standings/current',
     function(req, res) {        
-        yj.league.standings(
+        yf.league.standings(
             CURRENTKEY,
             function(err, data) {
                 if (err){
@@ -124,7 +124,7 @@ app.get('/api/league/standings/current',
 app.get('/api/league/career',
     function(req, res) {
         // We need to get all of the standings from the league to compute the career totals
-        yj.leagues.fetch(
+        yf.leagues.fetch(
             ALLKEY,
             "standings",
             function(err, data) {
@@ -173,6 +173,45 @@ app.get('/api/league/career',
         );
     }
 );
+
+app.get('/api/league/teams/career/rosters',
+    function(req, res){
+        yf.teams.leagues(
+            ALLKEY,
+            "roster",
+            function(err, data) {
+                if (err){
+                    res.send("error");
+                    return;
+                }
+                var careerTeams = {};
+
+                data.forEach((year) => {
+                    year["teams"].forEach((row) => {
+                        var manager = row["managers"][0]["guid"];
+                        if (careerTeams.hasOwnProperty(manager)) {
+                            careerTeams[manager]["years_played"] += 1;
+                            careerTeams[manager]["roster"].push({
+                                "year" : year["season"],
+                                "roster" : row["roster"]
+                            });
+                        } else {
+                            careerTeams[manager] = {};
+                            careerTeams[manager]["manager"] = row["managers"];
+                            careerTeams[manager]["years_played"] = 1;
+                            careerTeams[manager]["roster"] = [];
+                            careerTeams[manager]["roster"].push({
+                                "year" : year["season"],
+                                "roster" : row["roster"]
+                            });
+                        }
+                    });
+                });
+                res.json(careerTeams);
+            }
+        );
+    }
+)
 
 
 // The "catchall" handler: for any request that doesn't
