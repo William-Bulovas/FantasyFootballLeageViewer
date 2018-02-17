@@ -4,6 +4,7 @@ import { Navbar, NavItem, Nav } from 'react-bootstrap';
 
 import Home from './pages/Home';
 import History from './pages/History';
+import Players from './pages/Players';
 
 import './App.css';
 
@@ -39,7 +40,7 @@ class App extends Component {
 					<Home/>
 				: page == 1 ?
 					<History/>
-				: <Home/>
+				: <Players/>
 				}
 			</div>
 		);

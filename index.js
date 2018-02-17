@@ -180,7 +180,7 @@ app.get('/api/league/teams/career/rosters',
             ALLKEY,
             "roster",
             function(err, data) {
-                if (err){
+                if (err) {
                     res.send("error");
                     return;
                 }
