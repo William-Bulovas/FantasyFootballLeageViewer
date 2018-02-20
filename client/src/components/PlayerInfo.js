@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Table, DropdownButton, MenuItem } from 'react-bootstrap';
 
+import PlayerWeekInfo from './PlayerWeekInfo';
+
 class RosterRow extends Component {
 	render() {
 		const row = this.props.row;
@@ -16,56 +18,62 @@ class RosterRow extends Component {
 
 
 export default class PlayerInfo extends Component {
-    state = {year:0}
+    state = {year:0,week:16}
 
 	render() {    
-        const {standings,player} = this.props;
+        const { standings } = this.props;
 
-        const rosterRows = [];
-        const menuRows = [];
-        console.log(player);
-        console.log(standings);
+        const yearRows = [];
+        const weekRows = [];
+        for (var i = 16; i >0; i--){
+            weekRows.push(<MenuItem eventKey={i} key={i}>{i}</MenuItem>);
+        }
 
-        if(player) {
-            console.log(player["roster"][0])
-            player["roster"][this.state.year]["roster"].forEach((rosterSpot, i) => {
-                rosterRows.push(<RosterRow row={rosterSpot}/>);
-            });
-            player["roster"].forEach((year, i) => {
-                menuRows.push(<MenuItem eventKey={i} key={i}>{year["year"]}</MenuItem>);                
+        if(standings) {
+            standings["results"].forEach((year, i) => {
+                yearRows.push(<MenuItem eventKey={i} key={i}>{year["year"]}</MenuItem>);                
             })
         }
+
+        var week = this.state.week;
 
         return (
             <div>
                 <h3>{standings["manager"][0]["nickname"]}</h3>
             
-                { player ?
-                    <DropdownButton
-                                bsStyle={'Default'}
-                                title={player["roster"][this.state.year].year}
-                                id={'dropdown-basic-Default'}
-                                onSelect={(key, e) => {
-                                    this.setState({
-                                        year : key
-                                    })
-                                }}
-                            >
-                                {menuRows}
-                    </DropdownButton>
-                    : <div/>
-                }
-
-                <Table striped bordered condensed hover responsive>
-                    <thead>
-                        <tr>
-                            <th>Position</th>
-                            <th>Team</th>
-                            <th>Player</th>
-                        </tr>
-                    </thead>
-                    <tbody>{rosterRows}</tbody>
-                </Table>
+                { standings ?
+                    <div>
+                        <DropdownButton
+                                    bsStyle={'Default'}
+                                    title={"Season: " + standings["results"][this.state.year].season}
+                                    id={'dropdown-basic-Default'}
+                                    onSelect={(key, e) => {
+                                        this.setState({
+                                            year : key
+                                        })
+                                    }}
+                                >
+                                    {yearRows}
+                        </DropdownButton>
+                        
+                    
+                        <DropdownButton
+                                        bsStyle={'Default'}
+                                        title={"Week " + week}
+                                        id={'dropdown-basic-Default'}
+                                        onSelect={(key, e) => {
+                                            this.setState({
+                                                week : key
+                                            })
+                                        }}
+                                    >
+                                        {weekRows}
+                        </DropdownButton>
+                    </div>
+                    : <div/>}
+                
+                <PlayerWeekInfo week={week} teamId={this.props.standings["results"][this.state.year].team_key}/>
+                
             </div>
         );
     }

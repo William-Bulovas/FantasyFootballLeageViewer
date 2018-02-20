@@ -141,7 +141,9 @@ app.get('/api/league/career',
                             careerTotals[manager]["years_played"] += 1;
                             careerTotals[manager]["results"].push({
                                 "result" : row["standings"]["rank"],
-                                "year" : year["league_key"]
+                                "year" : year["league_key"],
+                                "team_key" : row["team_key"],
+                                "season" : year["season"]
                             });
                             careerTotals[manager]["movesMade"] = parseInt(careerTotals[manager]["movesMade"]) + parseInt(row["number_of_moves"]);
                             careerTotals[manager]["tradesMade"] += parseInt(row["number_of_trades"]);
@@ -157,7 +159,9 @@ app.get('/api/league/career',
                             careerTotals[manager]["results"] = [];
                             careerTotals[manager]["results"].push({
                                 "result" : row["standings"]["rank"],
-                                "year" : year["league_key"]
+                                "year" : year["league_key"],
+                                "team_key" : row["team_key"],
+                                "season" : year["season"]
                             });
                             careerTotals[manager]["movesMade"] = parseInt(row["number_of_moves"]);
                             careerTotals[manager]["tradesMade"] = parseInt(row["number_of_trades"]);
@@ -210,6 +214,22 @@ app.get('/api/league/teams/career/rosters',
                 res.json(careerTeams);
             }
         );
+    }
+)
+
+app.get('/api/league/teams/career/:teamId-:week',
+    function(req, res){
+        yf.roster.players(
+            req.params["teamId"],
+            req.params["week"],
+            function(err, data) {
+                if (err) {
+                    res.send("error");
+                    return;
+                }
+                res.json(data);
+            }
+        )
     }
 )
 
