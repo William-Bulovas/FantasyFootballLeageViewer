@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { Navbar, NavItem, Nav } from 'react-bootstrap';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import Home from './pages/Home';
 import History from './pages/History';
@@ -15,6 +16,7 @@ class App extends Component {
 		const { page } = this.state;
 		
 		return (
+			<Router>
 			<div className="App">
 				<header className="App-header">
 					<h1 className="App-title">Throw up the X Fantasy Football League</h1>
@@ -25,24 +27,18 @@ class App extends Component {
 						<Navbar.Toggle />
 					</Navbar.Header>
 					<Navbar.Collapse>
-						<Nav onSelect={(key, e) => {
-								this.setState({
-									page : key
-								})
-							}}>
-							<NavItem eventKey="0" key="0">Home</NavItem>
-							<NavItem eventKey="1" key="1">History</NavItem>
-							<NavItem eventKey="2" key="2">Players</NavItem>
+						<Nav>
+							<NavItem componentClass={Link} href='/' to='/'>Home</NavItem>
+							<NavItem componentClass={Link} href='/history'to='/history'>History</NavItem>
+							<NavItem componentClass={Link} href='/players'to='/players'>Players</NavItem>
 						</Nav>
 					</Navbar.Collapse>
 				</Navbar>
-				{ page == 0 ? 
-					<Home/>
-				: page == 1 ?
-					<History/>
-				: <Players/>
-				}
+				<Route exact path="/" component={Home}/>
+				<Route path="/history" component={History}/>
+				<Route path="/players" component={Players}/>
 			</div>
+			</Router>
 		);
 	}
 }
