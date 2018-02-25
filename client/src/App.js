@@ -31,6 +31,9 @@ class App extends Component {
 							<NavItem componentClass={Link} href='/' to='/'>Home</NavItem>
 							<NavItem componentClass={Link} href='/history'to='/history'>History</NavItem>
 							<NavItem componentClass={Link} href='/players'to='/players'>Players</NavItem>
+							<NavItem componentClass={Link} href='/login'to='/login' onSelect={
+								() => window.location.href="https://fantasyfootballviewer.herokuapp.com/login"
+							}>Login</NavItem>
 						</Nav>
 					</Navbar.Collapse>
 				</Navbar>
