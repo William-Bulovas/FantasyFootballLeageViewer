@@ -217,7 +217,7 @@ app.get('/api/league/teams/career/rosters',
     }
 )
 
-app.get('/api/league/teams/career/:teamId-:week',
+app.get('/api/league/teams/roster/:teamId-:week',
     function(req, res){
         yf.roster.players(
             req.params["teamId"],
@@ -231,6 +231,22 @@ app.get('/api/league/teams/career/:teamId-:week',
             }
         )
     }
+)
+
+app.get('/api/league/teams/matchups/:teamId-:week',
+function(req, res){
+    yf.team.matchups(
+        req.params["teamId"],
+        req.params["week"],
+        function(err, data) {
+            if (err) {
+                res.send("error");
+                return;
+            }
+            res.json(data);
+        }
+    )
+}
 )
 
 

@@ -19,20 +19,17 @@ export default class PlayerWeekInfo extends Component {
     state ={roster:undefined}
 
     componentDidMount(){
-        this.getRoster()
+        this.getRoster(this.props);
     }
 
     componentWillReceiveProps(nextProps){
-        fetch('api/league/teams/career/' + nextProps.teamId +'-'  + nextProps.week)
-        .then(res => res.json())
-        .then(res => this.setState({roster: res}))
-
+        this.getRoster(nextProps);
     }
     
-    getRoster(){
-        fetch('api/league/teams/career/' + this.props.teamId +'-'  + this.props.week)
+    getRoster(p){
+        fetch('api/league/teams/roster/' + p.teamId +'-'  + p.week)
             .then(res => res.json())
-            .then(res => this.setState({roster: res}))
+            .then(res => this.setState({roster: res}));
     }
 
 	render() {    
