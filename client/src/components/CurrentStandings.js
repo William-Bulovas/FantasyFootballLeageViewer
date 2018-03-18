@@ -10,8 +10,6 @@ class StandingsRow extends Component {
 				<td>{row["name"]}</td>
 				<td>{row["standings"]["outcome_totals"]["wins"]}</td>
 				<td>{row["standings"]["outcome_totals"]["losses"]}</td>
-				<td>{row["standings"]["points_for"]}</td>
-				<td>{row["standings"]["points_against"]}</td>
 			</tr>
 		);
 	}
@@ -54,8 +52,6 @@ export default class CurrentStandings extends Component {
 										<th>Team</th>
 										<th>Wins</th>
 										<th>Losses</th>
-										<th>Points For</th>
-										<th>Points Against</th>
 									</tr>
 							</thead>
 							<tbody>{rows}</tbody>

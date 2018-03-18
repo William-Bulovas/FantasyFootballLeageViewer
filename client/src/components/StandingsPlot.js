@@ -46,14 +46,15 @@ export default class StandingsPlot extends Component {
             return (
                 <Plot
                     data={plotData}
-                    layout={{width:1000,
-                            height:600,
-                            useResizeHandler:true,
+                    layout={{
                             yaxis: {autorange: 'reversed',
                                     dtick:1},
                             xaxis: {dtick:1},
                             title:'Standings Plot'}}
-                    config={{staticPlot: true}}        
+                    config={{staticPlot: true}}
+                    style={{width: '100%',
+                            height: '100%'}}        
+                    useResizeHandler={true}
                 />
             );
         }

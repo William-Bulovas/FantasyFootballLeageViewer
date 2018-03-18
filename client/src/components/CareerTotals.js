@@ -6,6 +6,7 @@ class CareerRow extends Component {
 	render() {
 		const row = this.props.row;
 		const type = this.props.type;
+		const mini = this.props.mini;
 
 		var first = 0;
 		var second = 0;
@@ -25,7 +26,17 @@ class CareerRow extends Component {
 
 		});
 
-
+		if (mini) {
+			return (
+				<tr>
+					<td>{row["manager"][0]["nickname"]}</td>
+					<td>{first}</td>
+					<td>{second}</td>
+					<td>{third}</td>
+					<td>{row["years_played"]}</td>
+				</tr>
+			);
+		}
 		return (
 			<tr>
 				<td>{row["manager"][0]["nickname"]}</td>
@@ -33,6 +44,7 @@ class CareerRow extends Component {
 				<td>{second}</td>
 				<td>{third}</td>
 				<td>{row["years_played"]}</td>
+
 				<td>{type == 0 ? row["wins"]
 						: (parseInt(row["wins"]) / parseInt(row["years_played"])).toFixed(2)}</td>
 				<td>{type == 0 ? row["losses"]
@@ -45,14 +57,13 @@ class CareerRow extends Component {
 						: (parseInt(row["movesMade"]) / parseInt(row["years_played"])).toFixed(2)}</td>
 				<td>{type == 0 ? row["tradesMade"]
 						: (parseInt(row["tradesMade"]) / parseInt(row["years_played"])).toFixed(2)}</td>
-
-				</tr>
+			</tr>
 		);
 	}
 }
 
 
-export default class CareerTotals extends Component {
+class CareerTotals extends Component {
 	state = { standingsList: [], typeOfStats: 0 }
 
 	componentDidMount() {
@@ -70,6 +81,7 @@ export default class CareerTotals extends Component {
 	render() {    
 		const { standingsList } = this.state;
 		const { typeOfStats } = this.state;
+		const { mini } = this.props;
 		var listOfPlayers = Object.values(standingsList);
 
 		listOfPlayers.sort(function(a,b) {
@@ -83,7 +95,7 @@ export default class CareerTotals extends Component {
 		const rows = [];
 		if (Object.values(standingsList).length) {
 			listOfPlayers.forEach((row) => {
-				rows.push(<CareerRow row={row} key={row["manager"]["guid"]} type={typeOfStats}/>);
+				rows.push(<CareerRow row={row} key={row["manager"]["guid"]} type={typeOfStats} mini={mini}/>);
 			});
 		}
 
@@ -93,7 +105,7 @@ export default class CareerTotals extends Component {
 				{rows.length ? (
 					<div>
 						<h1>Career Standings</h1>
-						<DropdownButton
+						{ !mini ? (<DropdownButton
 							bsStyle={'Default'}
 							title={typeOfStats == "0" ? "Aggregate" : "Average"}
 							id={'dropdown-basic-Default'}
@@ -108,25 +120,35 @@ export default class CareerTotals extends Component {
 							<MenuItem eventKey="1" key="1" 
 								>Average</MenuItem>
 
-						</DropdownButton>
+						</DropdownButton>)
+						: ( <div/> )}
 						<Table striped bordered condensed hover responsive>
 							<thead>
-							<tr>
-									<th>Team</th>
-									<th>First</th>
-									<th>Secound</th>
-									<th>Third</th>
-									<th>Years Played</th>
-									<th>Total Wins</th>
-									<th>Total Loses</th>
-									<th>Total Points For</th>
-									<th>Total Points Against</th>
-									<th>Total Moves</th>
-									<th>Total Trades</th>
-								</tr>
-								</thead>
-								<tbody>{rows}</tbody>
-							</Table>
+								{ mini ? 
+									(<tr>
+										<th>Team</th>
+										<th>First</th>
+										<th>Secound</th>
+										<th>Third</th>
+										<th>Years Played</th>
+									</tr>)
+								: ( <tr>
+										<th>Team</th>
+										<th>First</th>
+										<th>Secound</th>
+										<th>Third</th>
+										<th>Years Played</th>
+										<th>Total Wins</th>
+										<th>Total Loses</th>
+										<th>Total Points For</th>
+										<th>Total Points Against</th>
+										<th>Total Moves</th>
+										<th>Total Trades</th>
+									</tr>)
+								}
+							</thead>
+							<tbody>{rows}</tbody>
+						</Table>
 					</div>
 				) : (
 					// If we cannot get the standings show a failure
@@ -143,3 +165,9 @@ export default class CareerTotals extends Component {
 		);
 	}
 }
+
+CareerTotals.defaultProps = {
+	mini: false
+};
+
+export default CareerTotals;

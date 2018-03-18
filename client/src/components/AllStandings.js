@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 
 import Standings from './Standings';
-import CareerStandings from './CareerStandings';
+import CareerStandings from './CareerTotals';
 
 
 export default class AllStandings extends Component {    

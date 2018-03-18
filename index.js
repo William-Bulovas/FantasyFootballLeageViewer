@@ -37,6 +37,8 @@ new OAuth2Strategy({
         }
     };
 
+    console.log(accessToken);
+
     request(options, function (error, response, body) {
     if (!error && response.statusCode == 200) {
         var userObj = {
