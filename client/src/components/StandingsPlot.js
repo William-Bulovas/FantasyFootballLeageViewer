@@ -19,9 +19,7 @@ export default class StandingsPlot extends Component {
 	render() {    
         const { standingsList } = this.state;
 
-        console.log(standingsList);
         if (standingsList) {
-            console.log("here");
             var plotData = [];
 
             Object.values(standingsList).forEach( (standing) => {
@@ -41,8 +39,6 @@ export default class StandingsPlot extends Component {
 
                 plotData.push(trace);
             });
-            console.log(plotData)
-
             return (
                 <Plot
                     data={plotData}

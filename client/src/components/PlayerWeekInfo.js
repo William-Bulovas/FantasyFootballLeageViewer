@@ -33,13 +33,7 @@ export default class PlayerWeekInfo extends Component {
     }
 
 	render() {    
-        const { roster } = this.state;
-
-        console.log("Roster:");
-        console.log(roster);
-        console.log(this.props.teamId);
-        console.log(this.props.week);
-        
+        const { roster } = this.state;        
         const rosterRows = [];
         const menuRows = [];
 

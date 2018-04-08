@@ -1,8 +1,6 @@
 const express = require('express');
 const path = require('path');
-const passport = require('passport');
 var request = require('request');
-var OAuth2Strategy = require('passport-oauth2');
 var YahooFantasy = require('yahoo-fantasy'); 
 var logger = require('morgan');
 
@@ -11,73 +9,9 @@ var APP_SECRET =  process.env.YAHOO_SECRET_KEY;
 
 var yf = new YahooFantasy(APP_KEY, APP_SECRET);
 
-passport.serializeUser(function(user, done) {
-    done(null, user);
-  });
-  
-passport.deserializeUser(function(obj, done) {
-    done(null, obj);
-}); 
-
-passport.use(
-new OAuth2Strategy({
-    authorizationURL: 'https://api.login.yahoo.com/oauth2/request_auth',
-    tokenURL: 'https://api.login.yahoo.com/oauth2/get_token',
-    clientID: APP_KEY,
-    clientSecret: APP_SECRET,
-    callbackURL: "https://fantasyfootballviewer.herokuapp.com" + '/auth/yahoo/callback'
-}, function(accessToken, refreshToken, params, profile, done) {
-    
-    var options = {
-        url: 'https://social.yahooapis.com/v1/user/' + params.xoauth_yahoo_guid + '/profile?format=json',
-        method: 'get',
-        json: true,
-        auth: {
-            'bearer': accessToken
-        }
-    };
-
-    console.log(accessToken);
-
-    request(options, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-        var userObj = {
-            id: body.profile.guiid,
-            name: body.profile.nickname,
-            avatar: body.profile.image.imageUrl,
-            accessToken: accessToken,
-            refreshToken: refreshToken
-        };
-
-        yf.setUserToken(accessToken);
-        
-
-        return done(null, userObj);
-    }
-    });
-}
-));
-
 var app = express();
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(logger('dev'));
-
-app.get('/login',
-    passport.authenticate('oauth2', { failureRedirect: '/login' }),
-    function(req, res) {
-        res.send("login");
-    }
-);
-
-app.get('/auth/yahoo/callback',
-    passport.authenticate('oauth2', { failureRedirect: '/login' }),
-    function(req, res) {
-        res.redirect(req.session.redirect || '/');
-    } 
-);
-
 
 // Last three league keys
 // 348.l.1210268
@@ -107,8 +41,9 @@ app.get('/api/league/standings',
 );
 
 // Api query for only the current standings
-app.get('/api/league/standings/current',
-    function(req, res) {        
+app.get('/api/league/standings/current/:accesstoken',
+    function(req, res) {
+        yf.setUserToken(req.params["accesstoken"])  
         yf.league.standings(
             CURRENTKEY,
             function(err, data) {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table } from 'react-bootstrap';
-
+import { connect } from 'react-redux';
 
 class StandingsRow extends Component {
 	render() {
@@ -15,7 +15,7 @@ class StandingsRow extends Component {
 	}
 }
 
-export default class CurrentStandings extends Component {
+class CurrentStandings extends Component {
 	state = { standingsList: [] }
 
 	componentDidMount() {
@@ -24,7 +24,8 @@ export default class CurrentStandings extends Component {
 
 
 	getStandings = () => {
-		fetch('api/league/standings/current')
+		console.log(this.props.token);
+		fetch('api/league/standings/current/' + this.props.token)
 			.then(res => res.json())
 			.then(standingsList => this.setState({standingsList}));
 	}
@@ -49,10 +50,10 @@ export default class CurrentStandings extends Component {
 						<Table striped bordered condensed hover responsive>
 							<thead>
 								<tr>
-										<th>Team</th>
-										<th>Wins</th>
-										<th>Losses</th>
-									</tr>
+									<th>Team</th>
+									<th>Wins</th>
+									<th>Losses</th>
+								</tr>
 							</thead>
 							<tbody>{rows}</tbody>
 						</Table>
@@ -72,3 +73,11 @@ export default class CurrentStandings extends Component {
 		);
 	}
 }
+
+function mapStateToProps(state) {
+	return {
+	  token: state.access_token
+	};
+}  
+
+export default connect(mapStateToProps)(CurrentStandings);
