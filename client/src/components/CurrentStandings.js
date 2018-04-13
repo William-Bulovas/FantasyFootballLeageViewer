@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { fetchCurrentStandingsIfNeeded } from '../reducers/CurrentStandingsActions';
 
 class StandingsRow extends Component {
 	render() {
@@ -16,27 +17,34 @@ class StandingsRow extends Component {
 }
 
 class CurrentStandings extends Component {
-	state = { standingsList: [] }
 
 	componentDidMount() {
 		this.getStandings();
 	}
 
-
 	getStandings = () => {
-		console.log(this.props.token);
-		fetch('api/league/standings/current/' + this.props.token)
-			.then(res => res.json())
-			.then(standingsList => this.setState({standingsList}));
+		this.props.dispatch(fetchCurrentStandingsIfNeeded());
 	}
 
-
 	render() {    
-		const { standingsList } = this.state;
+		const { standings } = this.props;
+
+		if (standings == null) {
+			return 	(				
+				<div>
+					<h1>No standings :(</h1>
+					<button
+						className="tryagain"
+						onClick={this.getStandings}>
+						Try Again?
+					</button>
+				</div>);
+
+		}
 
 		const rows = [];
-		if (Object.values(standingsList).length) {
-			standingsList["standings"].forEach((row) => {
+		if (Object.values(standings).length) {
+			standings["standings"].forEach((row) => {
 				rows.push(<StandingsRow row={row} key={row["team_id"]}/>);
 			});
 		}
@@ -61,13 +69,13 @@ class CurrentStandings extends Component {
 				) : (
 					// If we cannot get the standings show a failure
 					<div>
-					<h1>No standings :(</h1>
-					<button
-						className="tryagain"
-						onClick={this.getStandings}>
-						Try Again?
-					</button>
-				</div>
+						<h1>No standings :(</h1>
+						<button
+							className="tryagain"
+							onClick={this.getStandings}>
+							Try Again?
+						</button>
+					</div>
 				)}
 			</div>
 		);
@@ -76,7 +84,8 @@ class CurrentStandings extends Component {
 
 function mapStateToProps(state) {
 	return {
-	  token: state.access_token
+	  token: state.access_token,
+	  standings: state.currentStandings
 	};
 }  
 

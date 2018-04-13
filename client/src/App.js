@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Navbar, NavItem, Nav } from 'react-bootstrap';
+import { Navbar, NavItem, Nav, Button } from 'react-bootstrap';
 import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom';
 import ClientOAuth2 from 'client-oauth2';
 
@@ -31,46 +31,54 @@ class App extends Component {
 
 		var requestAuthURI = "https://api.login.yahoo.com/oauth2/request_auth?client_id=" + APP_KEY + "&redirect_uri=" + redirect + "&response_type=token&language=en-us";
 		
-		
 		const { page } = this.state;
+
+		const rightStyle = {
+			position: "absolute",
+			right: "10px",
+		};
 
 		return (
 			<Router>
-			<div className="App">
-				<header className="App-header">
-					<h1 className="App-title">Throw up the X Fantasy Football League</h1>
-				</header>
-				<Navbar collapseOnSelect>
-					<Navbar.Header>
-						<Navbar.Toggle />
-					</Navbar.Header>
-					<Navbar.Collapse>
-						<Nav>
-							<NavItem componentClass={Link} href='/' to='/'>Home</NavItem>
-							<NavItem componentClass={Link} href='/history'to='/history'>History</NavItem>
-							<NavItem componentClass={Link} href='/players'to='/players'>Players</NavItem>
-						</Nav>
-					</Navbar.Collapse>
-				</Navbar>
-				<Route exact path="/" component={Home}/>
-				<Route path="/history" component={History}/>
-				<Route path="/players" component={Players}/>
-				<Route path="/auth/yahoo/:query" component={
-					({match}) => {
-						this.props.dispatch({
-							type: "LOGGED_IN",
-							token: this.getJsonFromUrl(window.location.href)['https://fantasyfootballviewer.herokuapp.com/auth/yahoo/callback#access_token'],
-						});
-						return <Redirect to='/' />
-					}
-				}/>
-				<button onClick={() => {
-						window.location.href = requestAuthURI;
-					}
-				}>
-					Login
-				</button>
-			</div>
+				<div className="App">
+					<header className="App-header">
+						<h1 className="App-title">Throw up the X Fantasy Football League</h1>
+						{  this.props.isLoggedIn ? 
+							<div/>
+							:
+							<Button style={rightStyle} onClick={() => {
+									window.location.href = requestAuthURI;
+								}
+									}>
+								Login
+							</Button>
+						}
+					</header>
+					<Navbar collapseOnSelect>
+						<Navbar.Header>
+							<Navbar.Toggle />
+						</Navbar.Header>
+						<Navbar.Collapse>
+							<Nav>
+								<NavItem componentClass={Link} href='/' to='/'>Home</NavItem>
+								<NavItem componentClass={Link} href='/history'to='/history'>History</NavItem>
+								<NavItem componentClass={Link} href='/players'to='/players'>Players</NavItem>
+							</Nav>
+						</Navbar.Collapse>
+					</Navbar>
+					<Route exact path="/" component={Home}/>
+					<Route path="/history" component={History}/>
+					<Route path="/players" component={Players}/>
+					<Route path="/auth/yahoo/:query" component={
+						({match}) => {
+							this.props.dispatch({
+								type: "LOGGED_IN",
+								token: this.getJsonFromUrl(window.location.href)['https://fantasyfootballviewer.herokuapp.com/auth/yahoo/callback#access_token'],
+							});
+							return <Redirect to='/' />
+						}
+					}/>
+				</div>
 			</Router>
 		);
 	}
