@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Table, DropdownButton, MenuItem } from 'react-bootstrap';
-
+import { connect } from 'react-redux';
+import { fetchCareerIfNeeded } from '../reducers/CareerActions';
 
 class CareerRow extends Component {
 	render() {
@@ -64,7 +65,7 @@ class CareerRow extends Component {
 
 
 class CareerTotals extends Component {
-	state = { standingsList: [], typeOfStats: 0 }
+	state = { typeOfStats: 0 }
 
 	componentDidMount() {
 		this.getStandings();
@@ -72,17 +73,29 @@ class CareerTotals extends Component {
 
 
 	getStandings = () => {		
-		fetch('api/league/career')
-			.then(res => res.json())
-			.then(standingsList => this.setState({standingsList}));
+		this.props.dispatch(fetchCareerIfNeeded());
 	}
 
 
 	render() {    
-		const { standingsList } = this.state;
+		const { career } = this.props;
 		const { typeOfStats } = this.state;
 		const { mini } = this.props;
-		var listOfPlayers = Object.values(standingsList);
+
+		if (career == null){
+			return (
+				<div>
+					<h1>No standings :(</h1>
+					<button
+						className="tryagain"
+						onClick={this.getStandings}>
+						Try Again?
+					</button>
+				</div>
+			)
+		}
+
+		var listOfPlayers = Object.values(career);
 
 		listOfPlayers.sort(function(a,b) {
 			if (a["wins"] == b["wins"]){
@@ -93,7 +106,7 @@ class CareerTotals extends Component {
 		listOfPlayers.reverse();
 
 		const rows = [];
-		if (Object.values(standingsList).length) {
+		if (Object.values(career).length) {
 			listOfPlayers.forEach((row) => {
 				rows.push(<CareerRow row={row} key={row["manager"]["guid"]} type={typeOfStats} mini={mini}/>);
 			});
@@ -153,13 +166,13 @@ class CareerTotals extends Component {
 				) : (
 					// If we cannot get the standings show a failure
 					<div>
-					<h1>No standings :(</h1>
-					<button
-						className="tryagain"
-						onClick={this.getStandings}>
-						Try Again?
-					</button>
-				</div>
+						<h1>No standings :(</h1>
+						<button
+							className="tryagain"
+							onClick={this.getStandings}>
+							Try Again?
+						</button>
+					</div>
 				)}
 			</div>
 		);
@@ -170,4 +183,10 @@ CareerTotals.defaultProps = {
 	mini: false
 };
 
-export default CareerTotals;
+function mapStateToProps(state) {
+	return {
+	  career: state.career
+	};
+}  
+
+export default connect(mapStateToProps)(CareerTotals);

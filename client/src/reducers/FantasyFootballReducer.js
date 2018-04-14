@@ -3,6 +3,12 @@ import {
     RECEIVE_CURRENT_STANDINGS
 } from './CurrentStandingsActions'
 
+import {
+    REQUEST_CAREER,
+    RECEIVE_CAREER
+} from './CareerActions'
+
+
 export const LOGGED_IN = "LOGGED_IN";
 
 const inialState = {
@@ -10,6 +16,7 @@ const inialState = {
     access_token: null,
     currentStandings: null,
     lastUpdatedCurrent: null,
+    career: null,
 }
 
 export default function FantasyFootballReducer(state = inialState, action){
@@ -28,6 +35,16 @@ export default function FantasyFootballReducer(state = inialState, action){
                 isFetchingCurrent: false,
                 lastUpdatedCurrent: action.receivedAt,
                 currentStandings: action.standings,
+            })
+        case REQUEST_CAREER:
+            return Object.assign({}, state, {
+                isFetchingCareer: true
+            })
+        case RECEIVE_CAREER:
+            return Object.assign({}, state, {
+                isFetchingCareer: false,
+                lastUpdatedCareer: action.receivedAt,
+                career: action.career,
             })
         default:
             return state

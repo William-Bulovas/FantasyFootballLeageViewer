@@ -31,7 +31,6 @@ function shouldFetchCurrentStandings(state) {
 export function fetchCurrentStandingsIfNeeded(subreddit) {
   return (dispatch, getState) => {
     if (shouldFetchCurrentStandings(getState())) {
-      console.log("In fetch if needed");      
       return dispatch(fetchCurrentStandings(getState()));
     }
   }

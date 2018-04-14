@@ -84,7 +84,6 @@ class CurrentStandings extends Component {
 
 function mapStateToProps(state) {
 	return {
-	  token: state.access_token,
 	  standings: state.currentStandings
 	};
 }  
