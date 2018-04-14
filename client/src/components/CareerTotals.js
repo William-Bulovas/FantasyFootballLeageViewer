@@ -71,11 +71,9 @@ class CareerTotals extends Component {
 		this.getStandings();
 	}
 
-
 	getStandings = () => {		
 		this.props.dispatch(fetchCareerIfNeeded());
 	}
-
 
 	render() {    
 		const { career } = this.props;

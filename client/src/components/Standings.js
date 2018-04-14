@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Table } from 'react-bootstrap';
 
-
 class StandingsRow extends Component {
 	render() {
 		const row = this.props.row;

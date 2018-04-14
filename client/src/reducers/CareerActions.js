@@ -3,24 +3,24 @@ export const RECEIVE_CAREER = 'RECEIVE_CAREER'
 
 function requestCareer() {
   return {
-    type: REQUEST_CUREENT_STANDINGS,
+    type: REQUEST_CAREER,
   }
 }
 
 function receiveCareer(career) {
   return {
-    type: RECEIVE_CURRENT_STANDINGS,
-    career: Career,
+    type: RECEIVE_CAREER,
+    career: career,
     receivedAt: Date.now()
   }
 }
 
 function fetchCareer(state) {
   return dispatch => {
-    dispatch(requestCurrentStandings())
+    dispatch(requestCareer())
     return fetch('api/league/career/' + state.access_token)
       .then(response => response.json())
-      .then(json => dispatch(receiveCurrentStandings(json)))
+      .then(json => dispatch(receiveCareer(json)))
   }
 }
 

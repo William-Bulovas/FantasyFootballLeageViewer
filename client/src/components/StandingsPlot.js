@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Table } from 'react-bootstrap';
 import Plot from 'react-plotly.js';
+import { connect } from 'react-redux';
+import { fetchCareerIfNeeded } from '../reducers/CareerActions';
 
-export default class StandingsPlot extends Component {    
+class StandingsPlot extends Component {    
 	state = { standingsList: [] }
     
     componentDidMount() {
@@ -11,18 +13,16 @@ export default class StandingsPlot extends Component {
 
 
     getStandings = () => {		
-        fetch('api/league/career')
-            .then(res => res.json())
-            .then(standingsList => this.setState({standingsList}));
+		this.props.dispatch(fetchCareerIfNeeded());
     }
     
 	render() {    
-        const { standingsList } = this.state;
+        const { career } = this.props;
 
-        if (standingsList) {
+        if (career) {
             var plotData = [];
 
-            Object.values(standingsList).forEach( (standing) => {
+            Object.values(career).forEach( (standing) => {
                 var x = [];
                 var y = [];
                 standing.results.forEach( (result) => {
@@ -59,3 +59,11 @@ export default class StandingsPlot extends Component {
             );
 	}
 }
+
+function mapStateToProps(state) {
+	return {
+	  career: state.career
+	};
+}  
+
+export default connect(mapStateToProps)(StandingsPlot);

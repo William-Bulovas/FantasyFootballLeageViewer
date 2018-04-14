@@ -23,8 +23,9 @@ const CURRENTKEY = "371.l.902083";
 const ALLKEY = "348.l.1210268, 359.l.606258, 371.l.902083";
   
 // Api to get all of the standings in the league so far
-app.get('/api/league/standings',
+app.get('/api/league/standings/:accesstoken',
     function(req, res) {
+        yf.setUserToken(req.params["accesstoken"])          
         yf.leagues.fetch(
             ALLKEY,
             "standings",
@@ -58,8 +59,9 @@ app.get('/api/league/standings/current/:accesstoken',
     }
 );
 
-app.get('/api/league/career',
+app.get('/api/league/career/:accesstoken',
     function(req, res) {
+        yf.setUserToken(req.params["accesstoken"])  
         // We need to get all of the standings from the league to compute the career totals
         yf.leagues.fetch(
             ALLKEY,
@@ -115,8 +117,9 @@ app.get('/api/league/career',
     }
 );
 
-app.get('/api/league/teams/career/rosters',
+app.get('/api/league/teams/career/rosters/:accesstoken',
     function(req, res){
+        yf.setUserToken(req.params["accesstoken"])  
         yf.teams.leagues(
             ALLKEY,
             "roster",
@@ -154,8 +157,9 @@ app.get('/api/league/teams/career/rosters',
     }
 )
 
-app.get('/api/league/teams/roster/:teamId-:week',
+app.get('/api/league/teams/roster/:teamId-:week/:accesstoken',
     function(req, res){
+        yf.setUserToken(req.params["accesstoken"])  
         yf.roster.players(
             req.params["teamId"],
             req.params["week"],
@@ -170,8 +174,9 @@ app.get('/api/league/teams/roster/:teamId-:week',
     }
 )
 
-app.get('/api/league/teams/matchups/:teamId-:week',
+app.get('/api/league/teams/matchups/:teamId-:week/:accesstoken',
 function(req, res){
+    yf.setUserToken(req.params["accesstoken"])  
     yf.team.matchups(
         req.params["teamId"],
         req.params["week"],

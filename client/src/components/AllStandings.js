@@ -3,9 +3,10 @@ import { DropdownButton, MenuItem } from 'react-bootstrap';
 
 import Standings from './Standings';
 import CareerStandings from './CareerTotals';
+import { connect } from 'react-redux';
+import { fetchStandingsIfNeeded } from '../reducers/StandingsActions';
 
-
-export default class AllStandings extends Component {    
+class AllStandings extends Component {    
 	state = { allStandings: [], year:0 }
     
     componentDidMount() {
@@ -14,14 +15,25 @@ export default class AllStandings extends Component {
 
 
     getStandings = () => {
-        fetch('api/league/standings/')
-            .then(res => res.json())
-            .then(allStandings => this.setState({allStandings}));
+		this.props.dispatch(fetchStandingsIfNeeded());
     }
     
 	render() {   
-        const { allStandings } = this.state;        
-        const { year } = this.state;        
+        const { standings } = this.props;        
+		const { year } = this.state;   
+		
+		if (standings == null) {
+			return (
+				<div>
+					<h1>No History :(</h1>
+					<button
+						className="tryagain"
+						onClick={this.getStandings}>
+						Try Again?
+					</button>
+				</div>
+			)
+		}
         
         const menuRows = [];
         menuRows.push(
@@ -29,7 +41,7 @@ export default class AllStandings extends Component {
                 Career
             </MenuItem>);
 
-        allStandings.forEach((year, i) => menuRows.push(
+		standings.forEach((year, i) => menuRows.push(
             <MenuItem eventKey={i+1} key={i+1}>
                 {year.season}
             </MenuItem>
@@ -38,11 +50,11 @@ export default class AllStandings extends Component {
 		return (
 			<div className="Standing">
                 <div>
-                {allStandings.length ? (
+                {standings.length ? (
 					<div>
 						<DropdownButton
 							bsStyle={'Default'}
-							title={year == 0 ? "Career" : allStandings[year-1].season}
+							title={year == 0 ? "Career" : standings[year-1].season}
 							id={'dropdown-basic-Default'}
 							onSelect={(key, e) => {
 								this.setState({
@@ -55,7 +67,7 @@ export default class AllStandings extends Component {
                         {
                             year == "0" ?
                             <CareerStandings />
-                            : <Standings standings={allStandings[year-1]}/>
+                            : <Standings standings={standings[year-1]}/>
                         }
 					</div>
 				) : (
@@ -75,3 +87,11 @@ export default class AllStandings extends Component {
 		);
 	}
 }
+
+function mapStateToProps(state) {
+	return {
+	  standings: state.standings
+	};
+}  
+
+export default connect(mapStateToProps)(AllStandings);
