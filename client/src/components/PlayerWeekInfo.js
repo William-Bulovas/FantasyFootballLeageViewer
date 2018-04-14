@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Table, DropdownButton, MenuItem } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { fetchWeekStatsIfNeeded } from '../reducers/WeekStatsActions';
 
 class RosterRow extends Component {
 	render() {
@@ -15,9 +17,7 @@ class RosterRow extends Component {
 }
 
 
-export default class PlayerWeekInfo extends Component {
-    state ={roster:undefined}
-
+class PlayerWeekInfo extends Component {
     componentDidMount(){
         this.getRoster(this.props);
     }
@@ -27,13 +27,11 @@ export default class PlayerWeekInfo extends Component {
     }
     
     getRoster(p){
-        fetch('api/league/teams/roster/' + p.teamId +'-'  + p.week)
-            .then(res => res.json())
-            .then(res => this.setState({roster: res}));
+		this.props.dispatch(fetchWeekStatsIfNeeded(p.teamId, p.week));
     }
 
 	render() {    
-        const { roster } = this.state;        
+        const { roster } = this.props;        
         const rosterRows = [];
         const menuRows = [];
 
@@ -59,3 +57,15 @@ export default class PlayerWeekInfo extends Component {
         );
     }
 }
+
+function mapStateToProps(state, ownProps) {
+    if (!state.weekRoster.hasOwnProperty(ownProps.teamId)) {
+        return {};
+    }
+        
+	return {
+	  roster: state.weekRoster[ownProps.teamId][ownProps.week]
+	};
+}  
+
+export default connect(mapStateToProps)(PlayerWeekInfo);

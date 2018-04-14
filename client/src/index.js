@@ -15,6 +15,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 const persistConfig = {
     key: 'root',
     storage,
+    timeout: 3600,
 };
 
 const persistedReducer = persistReducer(persistConfig, FantasyFootballReducer);

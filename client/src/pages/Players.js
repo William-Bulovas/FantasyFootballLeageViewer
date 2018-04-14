@@ -1,24 +1,30 @@
 import React, { Component } from 'react';
 
 import { PageHeader, Button } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { fetchCareerIfNeeded } from '../reducers/CareerActions';
 
 import PlayerInfo from '../components/PlayerInfo';
 
-export default class Players extends Component {
-    state={ standingsList : [], selected : "default" }
+class Players extends Component {
+    state={ selected : "default" }
     
 	componentDidMount() {
         this.getStandings();
 	}
 
 	getStandings = () => {
-		fetch('api/league/career')
-			.then(res => res.json())
-			.then(standingsList => this.setState({standingsList}));
+		this.props.dispatch(fetchCareerIfNeeded());
     }
 
     render() {
-        const { standingsList } = this.state;
+        const { standingsList } = this.props;
+
+        if (standingsList == null) {
+            return (
+                <div/>
+            )
+        }
         
         var listOfPlayers = Object.values(standingsList);
         
@@ -56,3 +62,11 @@ export default class Players extends Component {
         )
     }
 }
+
+function mapStateToProps(state) {
+	return {
+        standingsList: state.career
+	};
+}  
+
+export default connect(mapStateToProps)(Players);

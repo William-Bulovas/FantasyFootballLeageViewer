@@ -28,7 +28,7 @@ function shouldFetchCareer(state) {
   return state.isLoggedIn && state.career == null;
 }
 
-export function fetchCareerIfNeeded(subreddit) {
+export function fetchCareerIfNeeded() {
   return (dispatch, getState) => {
     if (shouldFetchCareer(getState())) {
       return dispatch(fetchCareer(getState()));

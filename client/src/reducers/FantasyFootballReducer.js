@@ -13,6 +13,11 @@ import {
     RECEIVE_STANDINGS
 } from './StandingsActions'
 
+import {
+    REQUEST_WEEK_STATS,
+    RECEIVE_WEEK_STATS
+} from './WeekStatsActions'
+
 export const LOGGED_IN = "LOGGED_IN";
 
 const inialState = {
@@ -22,6 +27,7 @@ const inialState = {
     lastUpdatedCurrent: null,
     career: null,
     standings: null,
+    weekRoster: {},
 }
 
 export default function FantasyFootballReducer(state = inialState, action){
@@ -61,6 +67,24 @@ export default function FantasyFootballReducer(state = inialState, action){
                 lastUpdatedStandings: action.receivedAt,
                 standings: action.standings,
             })
+        case REQUEST_WEEK_STATS:
+            return Object.assign({}, state, {
+                isFetchingWeekStats: true
+            })
+        case RECEIVE_WEEK_STATS:
+            const roster = state.weekRoster;
+
+            if (!state.hasOwnProperty(action.teamId)) {
+                roster[action.teamId] = {};
+            }
+            
+            roster[action.teamId][action.week] = action.weekRoster;
+            return Object.assign({}, state, {
+                isFetchingWeekStats: false,
+                lastUpdatedWeekStats: action.receivedAt,
+                weekRoster: roster,
+            })
+
         default:
             return state
     }

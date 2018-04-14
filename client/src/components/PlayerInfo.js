@@ -73,7 +73,6 @@ export default class PlayerInfo extends Component {
                     : <div/>}
                 
                 <PlayerWeekInfo week={week} teamId={this.props.standings["results"][this.state.year].team_key}/>
-                
             </div>
         );
     }

@@ -28,7 +28,7 @@ function shouldFetchStandings(state) {
   return state.isLoggedIn && state.standings == null;
 }
 
-export function fetchStandingsIfNeeded(subreddit) {
+export function fetchStandingsIfNeeded() {
   return (dispatch, getState) => {
     if (shouldFetchStandings(getState())) {
       return dispatch(fetchStandings(getState()));
