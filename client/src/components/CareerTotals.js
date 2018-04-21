@@ -83,7 +83,7 @@ class CareerTotals extends Component {
 		if (career == null){
 			return (
 				<div>
-					<h1>No standings :(</h1>
+					<h6>No standings :(</h6>
 					<button
 						className="tryagain"
 						onClick={this.getStandings}>
@@ -115,7 +115,6 @@ class CareerTotals extends Component {
 			<div className="Standing">
 				{rows.length ? (
 					<div>
-						<h1>Career Standings</h1>
 						{ !mini ? (<DropdownButton
 							bsStyle={'Default'}
 							title={typeOfStats == "0" ? "Aggregate" : "Average"}

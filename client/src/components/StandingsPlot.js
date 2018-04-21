@@ -55,7 +55,14 @@ class StandingsPlot extends Component {
             );
         }
             return (
-                <div/>
+                <div>
+                    <h6>No standings :(</h6>
+                    <button
+                        className="tryagain"
+                        onClick={this.getStandings}>
+                        Try Again?
+                    </button>
+                </div>
             );
 	}
 }

@@ -32,7 +32,7 @@ class CurrentStandings extends Component {
 		if (standings == null) {
 			return 	(				
 				<div>
-					<h1>No standings :(</h1>
+					<h6>No standings :(</h6>
 					<button
 						className="tryagain"
 						onClick={this.getStandings}>
@@ -54,7 +54,6 @@ class CurrentStandings extends Component {
 			<div className="Standing">
 				{rows.length ? (
 					<div>
-						<h1>Current Standings</h1>
 						<Table striped bordered condensed hover responsive>
 							<thead>
 								<tr>
@@ -69,7 +68,7 @@ class CurrentStandings extends Component {
 				) : (
 					// If we cannot get the standings show a failure
 					<div>
-						<h1>No standings :(</h1>
+						<h6>No standings :(</h6>
 						<button
 							className="tryagain"
 							onClick={this.getStandings}>

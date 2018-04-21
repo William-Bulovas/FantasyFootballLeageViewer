@@ -49,11 +49,14 @@ class App extends Component {
 											<a className='nav-link' componentClass={Link} href='/players' to='/players'>Players</a>
 										</li>
 									</ul>
-									<button className='btn btn-outline-primary form-inline my-2 my-md-0' onClick={() => {
-											window.location.href = requestAuthURI;
-										}}>
-										Login
-									</button>
+									{ !this.props.isLoggedIn ?
+										(<button className='btn btn-outline-primary form-inline my-2 my-md-0' onClick={() => {
+												window.location.href = requestAuthURI;
+											}}>
+											Login
+										</button>)
+										: (<div/>)
+									}
 								</div>
 							</div>
 						</nav>						
