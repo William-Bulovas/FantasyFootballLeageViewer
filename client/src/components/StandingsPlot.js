@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Table } from 'react-bootstrap';
 import Plot from 'react-plotly.js';
 import { connect } from 'react-redux';
 import { fetchCareerIfNeeded } from '../reducers/CareerActions';
@@ -45,25 +44,23 @@ class StandingsPlot extends Component {
                     layout={{
                             yaxis: {autorange: 'reversed',
                                     dtick:1},
-                            xaxis: {dtick:1},
-                            title:'Standings Plot'}}
+                            xaxis: {dtick:1}}}
                     config={{staticPlot: true}}
-                    style={{width: '100%',
-                            height: '100%'}}        
-                    useResizeHandler={true}
+                    style={{width: 'auto',
+                            height: 'auto'}}        
                 />
             );
         }
-            return (
-                <div>
-                    <h6>No standings :(</h6>
-                    <button
-                        className="tryagain"
-                        onClick={this.getStandings}>
-                        Try Again?
-                    </button>
-                </div>
-            );
+        return (
+            <div>
+                <h6>No standings :(</h6>
+                <button
+                    className="btn btn-danger btn-sm"
+                    onClick={this.getStandings}>
+                    Try Again?
+                </button>
+            </div>
+        );
 	}
 }
 

@@ -165,7 +165,7 @@ class CareerTotals extends Component {
 					<div>
 						<h1>No standings :(</h1>
 						<button
-							className="tryagain"
+							className="btn btn-danger btn-sm"
 							onClick={this.getStandings}>
 							Try Again?
 						</button>

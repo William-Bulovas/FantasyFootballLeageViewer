@@ -61,7 +61,7 @@ class App extends Component {
 							</div>
 						</nav>						
 					</header>
-					<div class="container">
+					<div class="container content-box">
 						<Route exact path="/" component={Home}/>
 						<Route path="/history" component={History}/>
 						<Route path="/players" component={Players}/>

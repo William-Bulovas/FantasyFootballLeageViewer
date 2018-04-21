@@ -3,3 +3,7 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.content-box {
+  box-sizing: content-box;
+}

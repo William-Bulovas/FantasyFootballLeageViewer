@@ -33,7 +33,12 @@ export default class Home extends Component {
                 </div>
                 <div className='row mt-3'>
                     <div className='col mt-3'>
-                        <StandingsPlot/>
+                        <div className='card'>
+                            <div className='card-body'>
+                                <h5 class="card-title">Career Totals</h5>
+                                <StandingsPlot/>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

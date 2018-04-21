@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { fetchCurrentStandingsIfNeeded } from '../reducers/CurrentStandingsActions';
 
@@ -8,9 +7,9 @@ class StandingsRow extends Component {
 		const row = this.props.row;
 		return (
 			<tr>
-				<td>{row["name"]}</td>
-				<td>{row["standings"]["outcome_totals"]["wins"]}</td>
-				<td>{row["standings"]["outcome_totals"]["losses"]}</td>
+				<td scope="row">{row["name"]}</td>
+				<td scope="row">{row["standings"]["outcome_totals"]["wins"]}</td>
+				<td scope="row">{row["standings"]["outcome_totals"]["losses"]}</td>
 			</tr>
 		);
 	}
@@ -54,23 +53,23 @@ class CurrentStandings extends Component {
 			<div className="Standing">
 				{rows.length ? (
 					<div>
-						<Table striped bordered condensed hover responsive>
+						<table className='table table-bordered table-striped table-hover'>
 							<thead>
 								<tr>
-									<th>Team</th>
-									<th>Wins</th>
-									<th>Losses</th>
+									<th scope="col">Team</th>
+									<th scope="col">Wins</th>
+									<th scope="col">Losses</th>
 								</tr>
 							</thead>
 							<tbody>{rows}</tbody>
-						</Table>
+						</table>
 					</div>
 				) : (
 					// If we cannot get the standings show a failure
 					<div>
 						<h6>No standings :(</h6>
 						<button
-							className="tryagain"
+							className="btn btn-danger btn-sm"
 							onClick={this.getStandings}>
 							Try Again?
 						</button>
