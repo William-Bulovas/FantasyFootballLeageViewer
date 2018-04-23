@@ -36,7 +36,7 @@ class App extends Component {
 					<header className="App-header">
 						<nav collapseOnSelect className='navbar navbar-expand navbar-dark bg-dark'>
 							<div class="container">
-								<a className='navbar-brand' href='/'>Throw up the X Fantasy Football League</a>
+								<span className='navbar-brand'>Throw up the X Fantasy Football League</span>
 								<div className='collapse navbar-collapse'>
 									<ul className='navbar-nav mr-auto'>
 										<li className='nav-item'>

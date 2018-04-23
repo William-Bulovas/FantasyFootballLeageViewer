@@ -110,29 +110,37 @@ class CareerTotals extends Component {
 			});
 		}
 
+		const preTotal = typeOfStats == 0 ? "Total" : "Ave.";
+
 		return (
 
 			<div className="Standing">
 				{rows.length ? (
 					<div>
-						{ !mini ? (<DropdownButton
-							bsStyle={'Default'}
-							title={typeOfStats == "0" ? "Aggregate" : "Average"}
-							id={'dropdown-basic-Default'}
-							onSelect={(key, e) => {
-								this.setState({
-									typeOfStats : key
-								})
-							}}
-						>
-							<MenuItem eventKey="0" key="0" 
-								>Aggregate</MenuItem>
-							<MenuItem eventKey="1" key="1" 
-								>Average</MenuItem>
-
-						</DropdownButton>)
+						{ !mini ? (
+							<div className="btn-group float-right mr-3">
+								<button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									{typeOfStats == 0 ? "Aggregate" : "Average" }
+								</button>
+								<div className="dropdown-menu">
+									<a className="dropdown-item" onClick={
+										() => this.setState({
+											typeOfStats : 0
+										})
+									}>
+										Aggregate
+									</a>
+									<a className="dropdown-item" onClick={
+										() => this.setState({
+											typeOfStats : 1
+										})
+									}>
+										Average
+									</a>
+								</div>
+							</div>)
 						: ( <div/> )}
-						<Table striped bordered condensed hover responsive>
+						<table className='table table-bordered table-striped table-hover'>
 							<thead>
 								{ mini ? 
 									(<tr>
@@ -148,17 +156,17 @@ class CareerTotals extends Component {
 										<th>Secound</th>
 										<th>Third</th>
 										<th>Years Played</th>
-										<th>Total Wins</th>
-										<th>Total Loses</th>
-										<th>Total Points For</th>
-										<th>Total Points Against</th>
-										<th>Total Moves</th>
-										<th>Total Trades</th>
+										<th>{preTotal + " Wins"}</th>
+										<th>{preTotal + " Loses"}</th>
+										<th>{preTotal + " Points For"}</th>
+										<th>{preTotal + " Points Against"}</th>
+										<th>{preTotal + " Moves"}</th>
+										<th>{preTotal + " Trades"}</th>
 									</tr>)
 								}
 							</thead>
 							<tbody>{rows}</tbody>
-						</Table>
+						</table>
 					</div>
 				) : (
 					// If we cannot get the standings show a failure

@@ -25,9 +25,9 @@ class AllStandings extends Component {
 		if (standings == null) {
 			return (
 				<div>
-					<h1>No History :(</h1>
+					<h6>No standings :(</h6>
 					<button
-						className="tryagain"
+						className="btn btn-danger btn-sm"
 						onClick={this.getStandings}>
 						Try Again?
 					</button>
@@ -37,33 +37,39 @@ class AllStandings extends Component {
         
         const menuRows = [];
         menuRows.push(
-            <MenuItem eventKey={0} key={0}> 
+            <a className="dropdown-item" eventKey={0} key={0}  onClick={
+				() => this.setState({
+					year : 0
+				})
+			}> 
                 Career
-            </MenuItem>);
-
+			</a>);
+		menuRows.push(		
+			<div className="dropdown-divider"></div>
+		);
 		standings.forEach((year, i) => menuRows.push(
-            <MenuItem eventKey={i+1} key={i+1}>
+            <a className="dropdown-item" eventKey={i+1} key={i+1} onClick={
+				() => this.setState({
+					year : i+1
+				})
+			}>
                 {year.season}
-            </MenuItem>
+            </a>
         ));
 
 		return (
-			<div className="Standing">
+			<div className="w-100">
                 <div>
                 {standings.length ? (
 					<div>
-						<DropdownButton
-							bsStyle={'Default'}
-							title={year == 0 ? "Career" : standings[year-1].season}
-							id={'dropdown-basic-Default'}
-							onSelect={(key, e) => {
-								this.setState({
-									year : key
-								})
-							}}
-						>
-                            {menuRows}
-						</DropdownButton>
+						<div className="btn-group float-right mb-3">
+							<button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								{year == 0 ? "Career" : standings[year-1].season}
+							</button>
+							<div className="dropdown-menu">
+                            	{menuRows}
+							</div>
+						</div>
                         {
                             year == "0" ?
                             <CareerStandings />

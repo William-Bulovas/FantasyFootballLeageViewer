@@ -32,7 +32,7 @@ export default class CurrentStandings extends Component {
 
 			<div className="Standing">
                 <div>
-                    <Table striped bordered condensed hover responsive>
+                    <table className='table table-bordered table-striped table-hover'>
                         <thead>
                             <tr>
                                     <th>Team</th>
@@ -43,7 +43,7 @@ export default class CurrentStandings extends Component {
                                 </tr>
                         </thead>
                         <tbody>{rows}</tbody>
-                    </Table>
+                    </table>
                 </div>
 			</div>
 		);
