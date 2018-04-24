@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Table, DropdownButton, MenuItem } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { fetchWeekStatsIfNeeded } from '../reducers/WeekStatsActions';
 
@@ -43,7 +42,7 @@ class PlayerWeekInfo extends Component {
 
         return (
             <div>            
-                <Table striped bordered condensed hover responsive>
+                <table className='table table-bordered table-striped table-hover'>
                     <thead>
                         <tr>
                             <th>Position</th>
@@ -52,7 +51,7 @@ class PlayerWeekInfo extends Component {
                         </tr>
                     </thead>
                     <tbody>{rosterRows}</tbody>
-                </Table>
+                </table>
             </div>
         );
     }

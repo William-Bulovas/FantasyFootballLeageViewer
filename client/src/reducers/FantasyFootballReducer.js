@@ -74,7 +74,8 @@ export default function FantasyFootballReducer(state = inialState, action){
         case RECEIVE_WEEK_STATS:
             const roster = state.weekRoster;
 
-            if (!state.hasOwnProperty(action.teamId)) {
+            if (roster[action.teamId] === undefined) {
+                console.log("goind dumb shit");
                 roster[action.teamId] = {};
             }
             

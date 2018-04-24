@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import { PageHeader, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { fetchCareerIfNeeded } from '../reducers/CareerActions';
 
@@ -38,26 +37,42 @@ class Players extends Component {
         listOfPlayers.reverse();
         
         if (this.state.selected == "default" && listOfPlayers.length > 0) {
-            this.setState({'selected' : listOfPlayers[0]["manager"][0]["guid"]});
+            this.setState({selected : listOfPlayers[0]["manager"][0]["guid"]});
         }
         
         const playerRows = listOfPlayers.map((player) => 
-            <Button onClick={() => {
-                this.setState({'selected' : player["manager"][0]["guid"]});
-            }}>{player["manager"][0]["nickname"]}</Button>
+            <div className="bd-toc-item">
+                <a className='nav-link' onClick={() => {
+                    this.setState({selected : player["manager"][0]["guid"]});
+                }}>
+                    {player["manager"][0]["nickname"]}
+                </a>
+            </div>
         );
 
         return (
             <div>
-                <PageHeader>
-                    Players
-                </PageHeader>
-                <ul> {playerRows} </ul>
+                <div className='row mt-3'>
+                    <h3>
+                        Players
+                    </h3>
+                </div>
+                <div className='row'>
+                    <div className='navbar navbar-expand-lg navbar-light bg-light col-12 col-md-3 col-xl-2 bd-sidebar border mr-4 mt-2 mb-3'> 
+                        <button class="btn btn-link bd-search-docs-toggle d-md-none p-0 ml-3 collapsed" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle docs navigation"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="30" height="30" focusable="false">
+                            <title>Menu</title>
+                            <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"></path></svg>
+                        </button>
+                        <nav className='collapse navbar-collapse flex-column h-100' id="navbarToggler">
+                                {playerRows} 
+                        </nav>
+                    </div>
                 {listOfPlayers.length > 0  && this.state.selected != "default" ? 
                     <PlayerInfo standings={standingsList[this.state.selected]}/>
 
                     : <li/>
                 }
+                </div>
             </div>
         )
     }

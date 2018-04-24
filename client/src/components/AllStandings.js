@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { DropdownButton, MenuItem } from 'react-bootstrap';
 
 import Standings from './Standings';
 import CareerStandings from './CareerTotals';
@@ -37,7 +36,7 @@ class AllStandings extends Component {
         
         const menuRows = [];
         menuRows.push(
-            <a className="dropdown-item" eventKey={0} key={0}  onClick={
+            <a className="dropdown-item" eventKey={0} key={0} onClick={
 				() => this.setState({
 					year : 0
 				})

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Table } from 'react-bootstrap';
 
 class StandingsRow extends Component {
 	render() {
@@ -35,12 +34,12 @@ export default class CurrentStandings extends Component {
                     <table className='table table-bordered table-striped table-hover'>
                         <thead>
                             <tr>
-                                    <th>Team</th>
-                                    <th>Wins</th>
-                                    <th>Losses</th>
-                                    <th>Points For</th>
-                                    <th>Points Against</th>
-                                </tr>
+								<th>Team</th>
+								<th>Wins</th>
+								<th>Losses</th>
+								<th>Points For</th>
+								<th>Points Against</th>
+							</tr>
                         </thead>
                         <tbody>{rows}</tbody>
                     </table>

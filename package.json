@@ -16,7 +16,6 @@
     "passport": "^0.4.0",
     "passport-oauth2": "^1.4.0",
     "react": "^16.2.0",
-    "react-bootstrap": "^0.32.1",
     "react-dom": "^16.2.0",
     "request": "^2.83.0",
     "yahoo-fantasy": "^2.0.4"
