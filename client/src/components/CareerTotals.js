@@ -139,33 +139,35 @@ class CareerTotals extends Component {
 								</div>
 							</div>)
 						: ( <div/> )}
-						<table className='table table-bordered table-striped table-hover'>
-							<thead>
-								{ mini ? 
-									(<tr>
-										<th>Team</th>
-										<th>First</th>
-										<th>Secound</th>
-										<th>Third</th>
-										<th>Years Played</th>
-									</tr>)
-								: ( <tr>
-										<th>Team</th>
-										<th>First</th>
-										<th>Secound</th>
-										<th>Third</th>
-										<th>Years Played</th>
-										<th>{preTotal + " Wins"}</th>
-										<th>{preTotal + " Loses"}</th>
-										<th>{preTotal + " Points For"}</th>
-										<th>{preTotal + " Points Against"}</th>
-										<th>{preTotal + " Moves"}</th>
-										<th>{preTotal + " Trades"}</th>
-									</tr>)
-								}
-							</thead>
-							<tbody>{rows}</tbody>
-						</table>
+						<div className='table-responsive'>
+							<table className='table table-bordered table-striped table-hover'>
+								<thead>
+									{ mini ? 
+										(<tr>
+											<th>Team</th>
+											<th>First</th>
+											<th>Secound</th>
+											<th>Third</th>
+											<th>Years Played</th>
+										</tr>)
+									: ( <tr>
+											<th>Team</th>
+											<th>First</th>
+											<th>Secound</th>
+											<th>Third</th>
+											<th>Years Played</th>
+											<th>{preTotal + " Wins"}</th>
+											<th>{preTotal + " Loses"}</th>
+											<th>{preTotal + " Points For"}</th>
+											<th>{preTotal + " Points Against"}</th>
+											<th>{preTotal + " Moves"}</th>
+											<th>{preTotal + " Trades"}</th>
+										</tr>)
+									}
+								</thead>
+								<tbody>{rows}</tbody>
+							</table>
+						</div>
 					</div>
 				) : (
 					// If we cannot get the standings show a failure

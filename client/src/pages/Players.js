@@ -41,8 +41,8 @@ class Players extends Component {
         }
         
         const playerRows = listOfPlayers.map((player) => 
-            <div className="bd-toc-item">
-                <a className='nav-link' onClick={() => {
+            <div className="nav-link">
+                <a className='nav-link' href='#' onClick={() => {
                     this.setState({selected : player["manager"][0]["guid"]});
                 }}>
                     {player["manager"][0]["nickname"]}

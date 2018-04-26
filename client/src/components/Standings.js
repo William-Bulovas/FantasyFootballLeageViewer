@@ -31,18 +31,20 @@ export default class CurrentStandings extends Component {
 
 			<div className="Standing">
                 <div>
-                    <table className='table table-bordered table-striped table-hover'>
-                        <thead>
-                            <tr>
-								<th>Team</th>
-								<th>Wins</th>
-								<th>Losses</th>
-								<th>Points For</th>
-								<th>Points Against</th>
-							</tr>
-                        </thead>
-                        <tbody>{rows}</tbody>
-                    </table>
+					<div className='table-responsive'>
+						<table className='table table-bordered table-striped table-hover'>
+							<thead>
+								<tr>
+									<th>Team</th>
+									<th>Wins</th>
+									<th>Losses</th>
+									<th>Points For</th>
+									<th>Points Against</th>
+								</tr>
+							</thead>
+							<tbody>{rows}</tbody>
+						</table>
+					</div>
                 </div>
 			</div>
 		);

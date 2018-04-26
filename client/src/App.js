@@ -36,17 +36,26 @@ class App extends Component {
 					<header className="App-header">
 						<nav collapseOnSelect className='navbar navbar-expand navbar-dark bg-dark'>
 							<div class="container">
-								<span className='navbar-brand'>Throw up the X Fantasy Football League</span>
+								<span className='navbar-brand d-none d-md-inline'>Throw up the X Fantasy Football League</span>
 								<div className='collapse navbar-collapse'>
 									<ul className='navbar-nav mr-auto'>
 										<li className='nav-item'>
-											<a className='nav-link' componentClass={Link} href='/' to='/'>Home</a>
+											<a className='nav-link d-none d-md-inline' componentClass={Link} href='/' to='/'>Home</a>
+											<a className='mr-3 d-md-none' componentClass={Link} href='/' to='/'>
+												<img src='/assets/svg/home.svg' className='icon'/>	
+											</a>
 										</li>
 										<li className='nav-item'>
-											<a className='nav-link' componentClass={Link} href='/history' to='/history'>History</a>
+											<a className='nav-link d-none d-md-inline' componentClass={Link} href='/history' to='/history'>History</a>
+											<a className='mr-3 d-md-none' componentClass={Link} href='/history' to='/history'>
+												<img src='/assets/svg/list.svg' className='icon'/>	
+											</a>
 										</li>
 										<li className='nav-item'>
-											<a className='nav-link' componentClass={Link} href='/players' to='/players'>Players</a>
+											<a className='nav-link d-none d-md-inline' componentClass={Link} href='/players' to='/players'>Players</a>
+											<a className='mr-3 d-md-none' componentClass={Link} href='/players' to='/players'>
+												<img src='/assets/svg/people.svg' className='icon'/>	
+											</a>
 										</li>
 									</ul>
 									{ !this.props.isLoggedIn ?
@@ -61,7 +70,7 @@ class App extends Component {
 							</div>
 						</nav>						
 					</header>
-					<div class="container content-box">
+					<div class="container">
 						<Route exact path="/" component={Home}/>
 						<Route path="/history" component={History}/>
 						<Route path="/players" component={Players}/>

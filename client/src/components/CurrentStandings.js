@@ -53,16 +53,18 @@ class CurrentStandings extends Component {
 			<div className="Standing">
 				{rows.length ? (
 					<div>
-						<table className='table table-bordered table-striped table-hover'>
-							<thead>
-								<tr>
-									<th scope="col">Team</th>
-									<th scope="col">Wins</th>
-									<th scope="col">Losses</th>
-								</tr>
-							</thead>
-							<tbody>{rows}</tbody>
-						</table>
+						<div className='table-responsive'>
+							<table className='table table-bordered table-striped table-hover'>
+								<thead>
+									<tr>
+										<th scope="col">Team</th>
+										<th scope="col">Wins</th>
+										<th scope="col">Losses</th>
+									</tr>
+								</thead>
+								<tbody>{rows}</tbody>
+							</table>
+						</div>
 					</div>
 				) : (
 					// If we cannot get the standings show a failure

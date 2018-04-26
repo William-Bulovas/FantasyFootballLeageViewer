@@ -41,17 +41,19 @@ class PlayerWeekInfo extends Component {
         }
 
         return (
-            <div>            
-                <table className='table table-bordered table-striped table-hover'>
-                    <thead>
-                        <tr>
-                            <th>Position</th>
-                            <th>Team</th>
-                            <th>Player</th>
-                        </tr>
-                    </thead>
-                    <tbody>{rosterRows}</tbody>
-                </table>
+            <div>         
+                <div className='table-responsive'>   
+                    <table className='table table-bordered table-striped table-hover'>
+                        <thead>
+                            <tr>
+                                <th>Position</th>
+                                <th>Team</th>
+                                <th>Player</th>
+                            </tr>
+                        </thead>
+                        <tbody>{rosterRows}</tbody>
+                    </table>
+                </div>
             </div>
         );
     }

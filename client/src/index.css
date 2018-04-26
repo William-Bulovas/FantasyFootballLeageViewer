@@ -4,6 +4,8 @@ body {
   font-family: sans-serif;
 }
 
-.content-box {
-  box-sizing: content-box;
+.icon {
+  width: 32px;
+  height: 32px;
+  fill: #fff;  
 }
