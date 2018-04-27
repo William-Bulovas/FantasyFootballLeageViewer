@@ -31,11 +31,22 @@ const inialState = {
 }
 
 export default function FantasyFootballReducer(state = inialState, action){
+    if (state.isLoggedIn) {
+        if (state.expires_in - Date.now() <= 0){
+            console.log("In check");
+            
+            return Object.assign({}, state, {
+                isLoggedIn : false
+            });
+        }
+    }
     switch(action.type){
         case LOGGED_IN:
+            const expires = action.expires_in * 1000 + Date.now();
             return Object.assign({}, state, {
                 isLoggedIn: true,
                 access_token: action.token,
+                expires_in: expires
             })
         case REQUEST_CUREENT_STANDINGS:
             return Object.assign({}, state, {
@@ -75,7 +86,6 @@ export default function FantasyFootballReducer(state = inialState, action){
             const roster = state.weekRoster;
 
             if (roster[action.teamId] === undefined) {
-                console.log("goind dumb shit");
                 roster[action.teamId] = {};
             }
             

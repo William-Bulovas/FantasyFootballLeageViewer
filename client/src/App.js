@@ -79,6 +79,7 @@ class App extends Component {
 								this.props.dispatch({
 									type: "LOGGED_IN",
 									token: this.getJsonFromUrl(window.location.href)['https://fantasyfootballviewer.herokuapp.com/auth/yahoo/callback#access_token'],
+									expires_in: this.getJsonFromUrl(window.location.href)['expires_in'],
 								});
 								return <Redirect to='/' />
 							}
