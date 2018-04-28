@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { fetchCareerIfNeeded } from '../reducers/CareerActions';
+import ReactLoading from 'react-loading';
 
 import PlayerInfo from '../components/PlayerInfo';
 
@@ -57,22 +58,30 @@ class Players extends Component {
                         Players
                     </h3>
                 </div>
-                <div className='row'>
-                    <div className='navbar navbar-expand-lg navbar-light bg-light col-12 col-md-3 col-xl-2 bd-sidebar border mr-4 mt-2 mb-3'> 
-                        <button class="btn btn-link bd-search-docs-toggle d-md-none p-0 ml-3 collapsed" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle docs navigation"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="30" height="30" focusable="false">
-                            <title>Menu</title>
-                            <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"></path></svg>
-                        </button>
-                        <nav className='collapse navbar-collapse flex-column h-100' id="navbarToggler">
-                                {playerRows} 
-                        </nav>
-                    </div>
-                {listOfPlayers.length > 0  && this.state.selected != "default" ? 
-                    <PlayerInfo standings={standingsList[this.state.selected]}/>
+                { this.props.isLoading ? 
+                    (
+                        <div className="w-100 d-flex justify-content-center" >
+                            <ReactLoading type="bars" color="#1919FF"/>
+                        </div>
+                    ) :
+                    (  
+                    <div className='row'>
+                        <div className='navbar navbar-expand-lg navbar-light bg-light col-12 col-md-3 col-xl-2 bd-sidebar border mr-4 mt-2 mb-3'> 
+                            <button class="btn btn-link bd-search-docs-toggle d-md-none p-0 ml-3 collapsed" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle docs navigation"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="30" height="30" focusable="false">
+                                <title>Menu</title>
+                                <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"></path></svg>
+                            </button>
+                            <nav className='collapse navbar-collapse flex-column h-100' id="navbarToggler">
+                                    {playerRows} 
+                            </nav>
+                        </div>
+                    {listOfPlayers.length > 0  && this.state.selected != "default" ? 
+                        <PlayerInfo standings={standingsList[this.state.selected]}/>
 
-                    : <li/>
+                        : <li/>
+                    }
+                    </div>)
                 }
-                </div>
             </div>
         )
     }
@@ -80,7 +89,8 @@ class Players extends Component {
 
 function mapStateToProps(state) {
 	return {
-        standingsList: state.career
+        standingsList: state.career,
+        isLoading: state.isFetchingCareer
 	};
 }  
 

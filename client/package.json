@@ -9,6 +9,7 @@
     "plotly.js": "^1.35.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-loading": "^2.0.2",
     "react-plotly.js": "^1.7.0",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",

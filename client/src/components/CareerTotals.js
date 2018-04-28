@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchCareerIfNeeded } from '../reducers/CareerActions';
+import ReactLoading from 'react-loading';
 
 class CareerRow extends Component {
 	render() {
@@ -111,10 +112,16 @@ class CareerTotals extends Component {
 
 		const preTotal = typeOfStats == 0 ? "Total" : "Ave.";
 
+		console.log("Loading = " + this.props.isLoading)
+
 		return (
 
 			<div className="Standing">
-				{rows.length ? (
+				{this.props.isLoading ? (
+					<div className="w-100 d-flex justify-content-center" >
+                            <ReactLoading type="bars" color="#1919FF"/>
+					</div>
+				) : rows.length ? (
 					<div>
 						{ !mini ? (
 							<div className="btn-group float-right mr-3">
@@ -191,7 +198,8 @@ CareerTotals.defaultProps = {
 
 function mapStateToProps(state) {
 	return {
-	  career: state.career
+	  career: state.career,
+	  isLoading: state.isFetchingCareer,
 	};
 }  
 

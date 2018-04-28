@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchCurrentStandingsIfNeeded } from '../reducers/CurrentStandingsActions';
+import ReactLoading from 'react-loading';
 
 class StandingsRow extends Component {
 	render() {
@@ -28,6 +29,8 @@ class CurrentStandings extends Component {
 	render() {    
 		const { standings } = this.props;
 
+		console.log("CurrentLoading = " + this.props.isLoading)		
+
 		if (standings == null) {
 			return 	(				
 				<div>
@@ -51,7 +54,11 @@ class CurrentStandings extends Component {
 		return (
 
 			<div className="Standing">
-				{rows.length ? (
+				{this.props.isLoading ?
+					<div className="w-100 d-flex justify-content-center" >
+                            <ReactLoading type="bars" color="#1919FF"/>
+					</div>
+				: rows.length ? (
 					<div>
 						<div className='table-responsive'>
 							<table className='table table-bordered table-striped table-hover'>
@@ -84,7 +91,8 @@ class CurrentStandings extends Component {
 
 function mapStateToProps(state) {
 	return {
-	  standings: state.currentStandings
+	  standings: state.currentStandings,
+	  isLoading: state.isFetchingCurrent
 	};
 }  
 
