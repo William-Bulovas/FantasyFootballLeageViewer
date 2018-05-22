@@ -7,6 +7,8 @@ import Home from './pages/Home';
 import History from './pages/History';
 import Players from './pages/Players';
 
+import ResponsiveNavItem from './components/ResponiveNavItem';
+
 import { connect } from 'react-redux';
 
 class App extends Component {
@@ -39,24 +41,9 @@ class App extends Component {
 								<span className='navbar-brand d-none d-md-inline'>Throw up the X Fantasy Football League</span>
 								<div className='collapse navbar-collapse'>
 									<ul className='navbar-nav mr-auto'>
-										<li className='nav-item'>
-											<a className='nav-link d-none d-md-inline' componentClass={Link} href='/' to='/'>Home</a>
-											<a className='mr-3 d-md-none' componentClass={Link} href='/' to='/'>
-												<img src='/assets/svg/home.svg' className='icon'/>	
-											</a>
-										</li>
-										<li className='nav-item'>
-											<a className='nav-link d-none d-md-inline' componentClass={Link} href='/history' to='/history'>History</a>
-											<a className='mr-3 d-md-none' componentClass={Link} href='/history' to='/history'>
-												<img src='/assets/svg/list.svg' className='icon'/>	
-											</a>
-										</li>
-										<li className='nav-item'>
-											<a className='nav-link d-none d-md-inline' componentClass={Link} href='/players' to='/players'>Players</a>
-											<a className='mr-3 d-md-none' componentClass={Link} href='/players' to='/players'>
-												<img src='/assets/svg/people.svg' className='icon'/>	
-											</a>
-										</li>
+										<ResponsiveNavItem to='/' imageSrc='/assets/svg/home.svg' text='Home'/>
+										<ResponsiveNavItem to='/history' imageSrc='/assets/svg/list.svg' text='History'/>
+										<ResponsiveNavItem to='/players' imageSrc='/assets/svg/people.svg' text='Players'/>
 									</ul>
 									{ !this.props.isLoggedIn ?
 										(<button className='btn btn-outline-primary form-inline my-2 my-md-0' onClick={() => {
