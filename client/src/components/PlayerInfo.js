@@ -54,12 +54,7 @@ export default class PlayerInfo extends Component {
         var week = this.state.week;
 
         return (
-            <div className='col-12 col-md-9 col-xl-8 py-md-3 pl-md-5'>
-                <div className='row mt-3'>
-                    <h3>
-                        {standings["manager"][0]["nickname"]}
-                    </h3>
-                </div>            
+            <div>
                 { standings ?
                     <div>
                         <div className="btn-group float-right mb-3">

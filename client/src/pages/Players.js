@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { fetchCareerIfNeeded } from '../reducers/CareerActions';
 import ReactLoading from 'react-loading';
 
-import PlayerInfo from '../components/PlayerInfo';
+import IndividualPlayerPage from '../components/IndividualPlayerPage';
 
 class Players extends Component {
     state={ selected : "default" }
@@ -80,8 +80,7 @@ class Players extends Component {
                             </nav>
                         </div>
                     {listOfPlayers.length > 0  && this.state.selected != "default" ? 
-                        <PlayerInfo standings={standingsList[this.state.selected]}/>
-
+                        <IndividualPlayerPage standings={standingsList[this.state.selected]}/>
                         : <li/>
                     }
                     </div>)
