@@ -41,15 +41,19 @@ class Players extends Component {
             this.setState({selected : listOfPlayers[0]["manager"][0]["guid"]});
         }
         
-        const playerRows = listOfPlayers.map((player) => 
-            <div className="nav-link">
-                <a className='nav-link' href='#' onClick={() => {
+        const playerRows = listOfPlayers.map((player) => {
+            let navLinkClass = "nav-link"
+            if (player["manager"][0]["guid"] == this.state.selected) {
+                navLinkClass += " active";
+            }
+            return <div className="nav-link">
+                <a className={navLinkClass} href='#' data-toggle="collapse" data-target="#navbarToggler" onClick={() => {
                     this.setState({selected : player["manager"][0]["guid"]});
                 }}>
                     {player["manager"][0]["nickname"]}
                 </a>
             </div>
-        );
+        });
 
         return (
             <div>
@@ -71,7 +75,7 @@ class Players extends Component {
                                 <title>Menu</title>
                                 <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"></path></svg>
                             </button>
-                            <nav className='collapse navbar-collapse flex-column h-100' id="navbarToggler">
+                            <nav className='collapse navbar-collapse flex-column h-100 nav nav-pills' id="navbarToggler">
                                     {playerRows} 
                             </nav>
                         </div>
