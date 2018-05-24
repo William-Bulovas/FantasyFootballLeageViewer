@@ -112,8 +112,6 @@ class CareerTotals extends Component {
 
 		const preTotal = typeOfStats == 0 ? "Total" : "Ave.";
 
-		console.log("Loading = " + this.props.isLoading)
-
 		return (
 
 			<div className="Standing">

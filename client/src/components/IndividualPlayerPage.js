@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import PlayerInfo from './PlayerInfo';
+import PlayerRoster from './PlayerRoster';
+import PlayerStats from './PlayerStats';
 
 export default class IndividualPlayerPage extends Component {
     state = { page: "roster" }
@@ -35,8 +36,8 @@ export default class IndividualPlayerPage extends Component {
                 </div>
 
                 { this.state.page == "roster" ?
-                    <PlayerInfo standings={this.props.standings}/>
-                    : <div/>
+                    <PlayerRoster standings={ this.props.standings }/>
+                    : <PlayerStats teamId={ this.props.selectedId }/>
                 }
             </div>
         )

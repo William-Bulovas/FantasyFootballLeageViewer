@@ -80,7 +80,8 @@ class Players extends Component {
                             </nav>
                         </div>
                     {listOfPlayers.length > 0  && this.state.selected != "default" ? 
-                        <IndividualPlayerPage standings={standingsList[this.state.selected]}/>
+                        <IndividualPlayerPage standings={standingsList[this.state.selected]} 
+                                              selectedId={this.state.selected}/>
                         : <li/>
                     }
                     </div>)

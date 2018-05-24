@@ -17,7 +17,7 @@ class RosterRow extends Component {
 }
 
 
-class PlayerWeekInfo extends Component {
+class PlayerWeekRoster extends Component {
     componentDidMount(){
         this.getRoster(this.props);
     }
@@ -82,4 +82,4 @@ function mapStateToProps(state, ownProps) {
 	};
 }  
 
-export default connect(mapStateToProps)(PlayerWeekInfo);
+export default connect(mapStateToProps)(PlayerWeekRoster);

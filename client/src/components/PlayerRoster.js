@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import PlayerWeekInfo from './PlayerWeekInfo';
+import PlayerWeekRoster from './PlayerWeekRoster';
 
 class RosterRow extends Component {
 	render() {
@@ -16,7 +16,7 @@ class RosterRow extends Component {
 }
 
 
-export default class PlayerInfo extends Component {
+export default class PlayerRoster extends Component {
     state = {year:0,week:16}
 
 	render() {    
@@ -77,7 +77,7 @@ export default class PlayerInfo extends Component {
                     </div>
                     : <div/>}
                 
-                <PlayerWeekInfo week={week} teamId={this.props.standings["results"][this.state.year].team_key}/>
+                <PlayerWeekRoster week={week} teamId={this.props.standings["results"][this.state.year].team_key}/>
             </div>
         );
     }
