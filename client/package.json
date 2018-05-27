@@ -3,14 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "bootstrap": "^4.1.0",
+    "bootstrap": "^4.1.1",
     "chart.js": "^2.7.2",
-    "client-oauth2": "^4.1.0",
+    "client-oauth2": "^4.2.1",
     "plotly": "^1.0.6",
-    "plotly.js": "^1.35.2",
-    "react": "^16.2.0",
+    "plotly.js": "^1.38.1",
+    "react": "^16.4.0",
     "react-chartjs-2": "^2.7.2",
-    "react-dom": "^16.2.0",
+    "react-dom": "^16.4.0",
     "react-loading": "^2.0.2",
     "react-plotly.js": "^1.7.0",
     "react-redux": "^5.0.7",
@@ -20,7 +20,7 @@
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-persist": "^5.9.1",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "NODE_PATH=src react-scripts start",
