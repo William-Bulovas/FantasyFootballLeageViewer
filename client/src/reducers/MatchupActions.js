@@ -32,17 +32,17 @@ function shouldFetchMatchups(state, teamId) {
   if (!state.isLoggedIn) {
     return false;
   }
-  if (!state.weekRoster.hasOwnProperty(teamId)) {
+  if (state.matchups == null || !state.matchups.hasOwnProperty(teamId)) {
     return true;
   }
 
   return false;
 }
 
-export function fetchMatchupsIfNeeded(teamId, week) {
+export function fetchMatchupsIfNeeded(teamId) {
   return (dispatch, getState) => {
-    if (shouldFetchMatchups(getState(), teamId, week)) {
-      return dispatch(fetchMatchups(getState(), teamId, week));
+    if (shouldFetchMatchups(getState(), teamId)) {
+      return dispatch(fetchMatchups(getState(), teamId));
     }
   };
 }

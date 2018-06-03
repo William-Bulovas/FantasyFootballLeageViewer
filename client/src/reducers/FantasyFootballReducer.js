@@ -20,8 +20,8 @@ const inialState = {
   lastUpdatedCurrent: null,
   career: null,
   standings: null,
-  weekRoster: {},
-  matchups: {}
+  weekRoster: null,
+  matchups: null
 };
 
 export default function FantasyFootballReducer(state = inialState, action) {
@@ -77,7 +77,11 @@ export default function FantasyFootballReducer(state = inialState, action) {
         isFetchingWeekStats: true
       });
     case RECEIVE_WEEK_STATS:
-      const roster = state.weekRoster;
+      let roster = state.weekRoster;
+
+      if (roster == null) {
+        roster = {};
+      }
 
       if (roster[action.teamId] === undefined) {
         roster[action.teamId] = {};
@@ -94,12 +98,17 @@ export default function FantasyFootballReducer(state = inialState, action) {
         isFetchingMatchups: true
       });
     case RECEIVE_MATCHUPS:
-      const matchups = state.matchups;
+      let matchups = state.matchups;
+
+      if (matchups == null) {
+        matchups = {};
+      }
 
       matchups[action.teamId] = action.matchups;
 
       return Object.assign({}, state, {
-        matchups: matchups
+        matchups: matchups,
+        isFetchingMatchups: false
       });
     default:
       return state;

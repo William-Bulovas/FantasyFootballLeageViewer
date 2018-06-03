@@ -189,23 +189,16 @@ app.get("/api/league/teams/matchups/:teamId-:week/:accesstoken", function(
   });
 });
 
-app.get("/api/league/teams/matchups/:teamId/:accesstoken", function(
-    req,
-    res
-  ) {
-    yf.setUserToken(req.params["accesstoken"]);
-    yf.team.matchups(req.params["teamId"], function(
-      err,
-      data
-    ) {
-      if (err) {
-        res.send("error");
-        return;
-      }
-      res.json(data);
-    });
+app.get("/api/league/teams/matchups/:teamId/:accesstoken", function(req, res) {
+  yf.setUserToken(req.params["accesstoken"]);
+  yf.team.matchups(req.params["teamId"], function(err, data) {
+    if (err) {
+      res.send("error");
+      return;
+    }
+    res.json(data);
   });
-  
+});
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
