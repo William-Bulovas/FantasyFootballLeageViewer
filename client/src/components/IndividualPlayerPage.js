@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import PlayerRoster from "./PlayerRoster";
+import PlayerRoster from "./RosterComponent/PlayerRoster";
 import PlayerStats from "./PlayerStats";
 import PlayerMatchups from "./PlayerMatchups";
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import CurrentStandings from '../components/CurrentStandings';
-import CareerTotals from '../components/CareerTotals';
+import CurrentStandings from '../components/CurrentStandingsComponent/CurrentStandings';
+import MiniCareerTotals from '../components/CareerTotalsComponent/MiniCareerTotals';
 import StandingsPlot from '../components/StandingsPlot';
 
 export default class Home extends Component {
@@ -26,7 +26,7 @@ export default class Home extends Component {
                         <div className='card'>
                             <div className='card-body'>
                                 <h5 class="card-title">Career Totals</h5>
-                                <CareerTotals mini={true} />
+                                <MiniCareerTotals />
                             </div>
                         </div>
                     </div>

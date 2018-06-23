@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
-import Standings from './Standings';
-import CareerStandings from './CareerTotals';
+import StandingTable from './StandingsComponent/StandingTable';
+import CareerStandings from './CareerTotalsComponent/CareerTotals';
+
 import { connect } from 'react-redux';
 import { fetchStandingsIfNeeded } from '../reducers/StandingsActions';
 
@@ -80,7 +81,7 @@ class AllStandings extends Component {
                         {
                             year == "0" ?
                             <CareerStandings />
-                            : <Standings standings={standings[year-1]}/>
+                            : <StandingTable standings={standings[year-1]}/>
                         }
 					</div>
 				) 

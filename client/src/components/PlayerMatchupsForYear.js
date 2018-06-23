@@ -2,16 +2,7 @@ import React, { Component } from "react";
 import { fetchMatchupsIfNeeded } from "../reducers/MatchupActions";
 import { connect } from "react-redux";
 import ReactLoading from "react-loading";
-
-class CenterLoading extends Component {
-  render() {
-    return (
-      <div className="w-100 d-flex justify-content-center">
-        <ReactLoading type="bars" color="#1919FF" />
-      </div>
-    );
-  }
-}
+import CenterLoading from "./CenterLoading";
 
 class MatchupRow extends Component {
   render() {

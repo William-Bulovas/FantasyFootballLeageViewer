@@ -1,20 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchWeekStatsIfNeeded } from "../reducers/WeekStatsActions";
+import { fetchWeekStatsIfNeeded } from "../../reducers/WeekStatsActions";
 import ReactLoading from "react-loading";
 
-class RosterRow extends Component {
-  render() {
-    const row = this.props.row;
-    return (
-      <tr>
-        <td>{row["display_position"]}</td>
-        <td>{row["editorial_team_abbr"]}</td>
-        <td>{row["name"]["full"]}</td>
-      </tr>
-    );
-  }
-}
+import RosterRow from "./RosterRow";
 
 class PlayerWeekRoster extends Component {
   componentDidMount() {
@@ -29,16 +18,12 @@ class PlayerWeekRoster extends Component {
     this.props.dispatch(fetchWeekStatsIfNeeded(p.teamId, p.week));
   }
 
-  render() {
-    const { roster } = this.props;
-    const rosterRows = [];
-    const menuRows = [];
+  createRows() {
+    return this.props.roster.roster.map(roster => <RosterRow row={roster} />);
+  }
 
-    if (roster) {
-      roster["roster"].forEach((rosterSpot, i) => {
-        rosterRows.push(<RosterRow row={rosterSpot} />);
-      });
-    }
+  render() {
+    const rosterRows = this.createRows();
 
     return (
       <div>
